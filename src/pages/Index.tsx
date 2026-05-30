@@ -132,7 +132,7 @@ export default function Index() {
             transition={{ duration: 0.8 }}
             className="text-[11px] uppercase tracking-eyebrow text-secondary mb-6"
           >
-            Elevate to premium — Luxury residences
+            A boutique luxury development house — Accra
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
