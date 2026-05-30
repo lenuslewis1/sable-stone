@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,49 +6,60 @@
 
 @layer base {
   :root {
-    /* Sable & Stone — warm cinematic luxury */
-    --background: 30 10% 6%;          /* sable black */
-    --foreground: 36 30% 92%;         /* ivory */
+    /* Sable & Stone — official brand palette
+       1d1714 sable-black · 4a4238 earth-brown · 8a826d olive · 969b84 sage
+       b5a798 taupe · d3c8bb sand · efeeed bone · fff2d5 cream */
+    --background: 22 14% 10%;          /* 1d1714 sable-black */
+    --foreground: 40 5% 93%;            /* efeeed bone */
 
-    --card: 30 10% 9%;
-    --card-foreground: 36 30% 92%;
+    --card: 28 14% 13%;
+    --card-foreground: 40 5% 93%;
 
-    --popover: 30 10% 9%;
-    --popover-foreground: 36 30% 92%;
+    --popover: 28 14% 13%;
+    --popover-foreground: 40 5% 93%;
 
-    --primary: 36 30% 92%;            /* ivory primary */
-    --primary-foreground: 30 10% 6%;
+    --primary: 40 5% 93%;               /* bone */
+    --primary-foreground: 22 14% 10%;
 
-    --secondary: 28 35% 52%;          /* bronze */
-    --secondary-foreground: 30 10% 6%;
+    --secondary: 28 17% 65%;            /* b5a798 taupe — signature accent */
+    --secondary-foreground: 22 14% 10%;
 
-    --muted: 30 8% 14%;
-    --muted-foreground: 36 12% 62%;
+    --muted: 28 12% 16%;
+    --muted-foreground: 30 10% 65%;
 
-    --accent: 28 35% 52%;
-    --accent-foreground: 30 10% 6%;
+    --accent: 30 18% 78%;               /* d3c8bb sand */
+    --accent-foreground: 22 14% 10%;
 
-    --destructive: 0 60% 50%;
-    --destructive-foreground: 36 30% 92%;
+    --destructive: 0 50% 45%;
+    --destructive-foreground: 40 5% 93%;
 
-    --border: 36 12% 20%;
-    --input: 36 12% 20%;
-    --ring: 28 35% 52%;
+    --border: 28 14% 25%;               /* 4a4238 earth-brown */
+    --input: 28 14% 25%;
+    --ring: 28 17% 65%;
 
     --radius: 0rem;
 
-    --sidebar-background: 30 10% 6%;
-    --sidebar-foreground: 36 30% 92%;
-    --sidebar-primary: 28 35% 52%;
-    --sidebar-primary-foreground: 30 10% 6%;
-    --sidebar-accent: 30 8% 14%;
-    --sidebar-accent-foreground: 36 30% 92%;
-    --sidebar-border: 36 12% 20%;
-    --sidebar-ring: 28 35% 52%;
+    --sidebar-background: 22 14% 10%;
+    --sidebar-foreground: 40 5% 93%;
+    --sidebar-primary: 28 17% 65%;
+    --sidebar-primary-foreground: 22 14% 10%;
+    --sidebar-accent: 28 12% 16%;
+    --sidebar-accent-foreground: 40 5% 93%;
+    --sidebar-border: 28 14% 25%;
+    --sidebar-ring: 28 17% 65%;
 
-    --dark: 30 12% 4%;
-    --dark-foreground: 36 30% 92%;
-    --bronze: 28 35% 52%;
+    --dark: 22 14% 7%;
+    --dark-foreground: 40 5% 93%;
+
+    /* Named brand tokens */
+    --sable: 22 14% 10%;
+    --earth: 28 14% 25%;
+    --olive: 40 12% 49%;
+    --sage:  75 9% 56%;
+    --taupe: 28 17% 65%;
+    --sand:  30 18% 78%;
+    --bone:  40 5% 93%;
+    --cream: 43 100% 92%;
   }
 }
 
@@ -57,9 +68,9 @@
   html { scroll-behavior: smooth; }
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Jost', system-ui, sans-serif;
     font-weight: 300;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.005em;
   }
   h1, h2, h3, h4, .font-display {
     font-family: 'Cormorant Garamond', 'Times New Roman', serif;
@@ -70,11 +81,18 @@
 
 @layer utilities {
   .font-display { font-family: 'Cormorant Garamond', serif; }
+  .font-sans { font-family: 'Jost', system-ui, sans-serif; }
   .tracking-eyebrow { letter-spacing: 0.32em; }
   .section-padding { @apply py-24 lg:py-40; }
   .container-narrow { @apply max-w-5xl mx-auto px-6 lg:px-10; }
   .container-wide { @apply max-w-[1440px] mx-auto px-6 lg:px-12; }
   .hairline { @apply border-t border-border/60; }
+
+  .text-taupe { color: hsl(var(--taupe)); }
+  .text-sand  { color: hsl(var(--sand)); }
+  .text-sage  { color: hsl(var(--sage)); }
+  .bg-sable   { background-color: hsl(var(--sable)); }
+  .bg-earth   { background-color: hsl(var(--earth)); }
 }
 
 @keyframes fade-up {

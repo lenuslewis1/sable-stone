@@ -94,20 +94,20 @@ const pillars = [
 
 const services = [
   {
-    title: "Exclusive sales",
-    body: "Clear, expert insight makes buying or selling your property seamless, secure and stress-free through every stage.",
+    title: "Architectural design",
+    body: "Every plan begins in our studio. Proportion, light and material are resolved before a single line is drawn for construction.",
   },
   {
-    title: "Property care",
-    body: "Focused property management protects your investment and brings peace of mind for owners and tenants alike.",
+    title: "Construction delivery",
+    body: "We build what we draw. A single team carries each residence from groundworks to handover, on a deliberately limited schedule.",
   },
   {
-    title: "Virtual tours",
-    body: "Immersive virtual tours let buyers explore homes from anywhere, saving time and drawing more serious offers fast.",
+    title: "Buyer personalisation",
+    body: "Controlled customisation within a considered framework. Material selections, finish packages and FF&E are tuned to the household, never the market.",
   },
   {
-    title: "Market insights",
-    body: "Accurate market research guides each step, helping our clients make smart moves and reach their property goals with ease.",
+    title: "Asset stewardship",
+    body: "Discreet, long-horizon care for the residences we deliver — protecting both the architecture and the investment behind it.",
   },
 ];
 
@@ -132,7 +132,7 @@ export default function Index() {
             transition={{ duration: 0.8 }}
             className="text-[11px] uppercase tracking-eyebrow text-secondary mb-6"
           >
-            Elevate to premium — Luxury residences
+            A boutique luxury development house — Accra
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
