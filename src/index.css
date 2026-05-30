@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Sable & Stone — warm cinematic luxury */
+    --background: 30 10% 6%;          /* sable black */
+    --foreground: 36 30% 92%;         /* ivory */
+
+    --card: 30 10% 9%;
+    --card-foreground: 36 30% 92%;
+
+    --popover: 30 10% 9%;
+    --popover-foreground: 36 30% 92%;
+
+    --primary: 36 30% 92%;            /* ivory primary */
+    --primary-foreground: 30 10% 6%;
+
+    --secondary: 28 35% 52%;          /* bronze */
+    --secondary-foreground: 30 10% 6%;
+
+    --muted: 30 8% 14%;
+    --muted-foreground: 36 12% 62%;
+
+    --accent: 28 35% 52%;
+    --accent-foreground: 30 10% 6%;
+
+    --destructive: 0 60% 50%;
+    --destructive-foreground: 36 30% 92%;
+
+    --border: 36 12% 20%;
+    --input: 36 12% 20%;
+    --ring: 28 35% 52%;
+
+    --radius: 0rem;
+
+    --sidebar-background: 30 10% 6%;
+    --sidebar-foreground: 36 30% 92%;
+    --sidebar-primary: 28 35% 52%;
+    --sidebar-primary-foreground: 30 10% 6%;
+    --sidebar-accent: 30 8% 14%;
+    --sidebar-accent-foreground: 36 30% 92%;
+    --sidebar-border: 36 12% 20%;
+    --sidebar-ring: 28 35% 52%;
+
+    --dark: 30 12% 4%;
+    --dark-foreground: 36 30% 92%;
+    --bronze: 28 35% 52%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+  }
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer utilities {
+  .font-display { font-family: 'Cormorant Garamond', serif; }
+  .tracking-eyebrow { letter-spacing: 0.32em; }
+  .section-padding { @apply py-24 lg:py-40; }
+  .container-narrow { @apply max-w-5xl mx-auto px-6 lg:px-10; }
+  .container-wide { @apply max-w-[1440px] mx-auto px-6 lg:px-12; }
+  .hairline { @apply border-t border-border/60; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
