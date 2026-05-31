@@ -128,18 +128,26 @@ const clientServices = [
   {
     title: "Exclusive sales",
     body: "Clear, expert insight makes buying or selling your property seamless, secure, and stress-free through every stage.",
+    img: villaMia6,
+    alt: "Modern Villa MIA residence exterior",
   },
   {
     title: "Property care",
     body: "Focused property management protects your investment and brings peace of mind for owners and tenants alike.",
+    img: philosophyVilla,
+    alt: "Illuminated modern villa landscape at dusk",
   },
   {
     title: "Virtual tours",
     body: "Immersive virtual tours let buyers explore homes from anywhere, saving time and drawing more serious offers fast.",
+    img: villaMia2,
+    alt: "Luxury villa terrace and pool at twilight",
   },
   {
     title: "Market insights",
     body: "Accurate market research guides each step, helping our clients make smart moves and reach their property goals with ease.",
+    img: villaMia3,
+    alt: "Modern Villa MIA residence with evening lighting",
   },
 ];
 
@@ -528,16 +536,25 @@ function ClientServicesScroller() {
             {clientServices.map((item, i) => (
               <article
                 key={item.title}
-                className="flex min-h-[340px] w-[82vw] shrink-0 flex-col justify-between border border-border/60 bg-background p-8 shadow-2xl shadow-black/20 card-hover-glow sm:w-[420px] lg:w-[480px] lg:p-10"
+                className="relative flex min-h-[340px] w-[82vw] shrink-0 flex-col justify-between overflow-hidden border border-border/60 bg-background p-8 shadow-2xl shadow-black/20 card-hover-glow sm:w-[420px] lg:w-[480px] lg:p-10"
               >
-                <p className="text-[11px] uppercase tracking-eyebrow text-foreground/40">
+                <img
+                  src={item.img}
+                  alt={item.alt}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.4s] ease-out hover:scale-[1.04]"
+                />
+                <div className="absolute inset-0 bg-background/62" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/92 via-background/50 to-background/25" />
+
+                <p className="relative z-10 text-[11px] uppercase tracking-eyebrow text-foreground/55">
                   0{i + 1}
                 </p>
-                <div>
+                <div className="relative z-10">
                   <h3 className="font-display text-3xl lg:text-4xl leading-[1.08]">
                     {item.title}
                   </h3>
-                  <p className="mt-6 text-sm text-foreground/65 leading-relaxed">
+                  <p className="mt-6 text-sm text-foreground/75 leading-relaxed">
                     {item.body}
                   </p>
                 </div>
