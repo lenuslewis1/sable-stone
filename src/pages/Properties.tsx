@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import { Search, X } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { properties, type Category } from "@/data/properties";
+import ScrollReveal from "@/components/shared/ScrollReveal";
 
 const categories: ("All" | Category)[] = ["All", "Villa", "Penthouse", "Tower", "Estate"];
 
@@ -33,14 +33,25 @@ export default function Properties() {
   return (
     <Layout>
       <section className="container-wide pt-20 lg:pt-28 pb-12">
-        <p className="text-[11px] uppercase tracking-eyebrow text-secondary mb-6">Portfolio</p>
-        <h1 className="font-display text-5xl md:text-7xl lg:text-8xl leading-[0.95] max-w-4xl">
+        <p
+          className="text-[11px] uppercase tracking-eyebrow text-secondary mb-6 page-load-reveal will-change-reveal"
+          style={{ animationDelay: "150ms" }}
+        >
+          Portfolio
+        </p>
+        <h1
+          className="font-display text-5xl md:text-7xl lg:text-8xl leading-[0.95] max-w-4xl page-load-reveal will-change-reveal"
+          style={{ animationDelay: "300ms" }}
+        >
           A small collection,<br />
           <em className="italic text-secondary">held to one standard.</em>
         </h1>
       </section>
 
-      <section className="border-t border-border/40 sticky top-20 lg:top-24 z-30 bg-background/90 backdrop-blur-md">
+      <section
+        className="border-t border-border/40 sticky top-20 lg:top-24 z-30 bg-background/90 backdrop-blur-md page-load-reveal will-change-reveal"
+        style={{ animationDelay: "450ms" }}
+      >
         <div className="container-wide py-6 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-10">
           <div className="relative flex-1 max-w-xl">
             <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/40" />
@@ -69,7 +80,7 @@ export default function Properties() {
                 <button
                   key={c}
                   onClick={() => setCategory(c)}
-                  className={`px-4 py-2 text-[11px] uppercase tracking-eyebrow border transition-colors ${
+                  className={`px-4 py-2 text-[11px] uppercase tracking-eyebrow border transition-colors btn-hover-lift will-change-transform ${
                     active
                       ? "bg-foreground text-background border-foreground"
                       : "border-border/60 text-foreground/70 hover:text-foreground hover:border-foreground/60"
@@ -109,11 +120,11 @@ export default function Properties() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
               {filtered.map((p, i) => (
-                <motion.div
+                <ScrollReveal
                   key={p.slug}
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: (i % 6) * 0.05 }}
+                  variant="slide-up"
+                  delay={(i % 6) * 60}
+                  className="card-hover-glow will-change-reveal"
                 >
                   <Link to={`/properties/${p.slug}`} className="group block">
                     <div className="relative aspect-[4/5] overflow-hidden bg-muted mb-5">
@@ -136,7 +147,7 @@ export default function Properties() {
                       <span>{p.bedrooms} bd</span>
                     </div>
                   </Link>
-                </motion.div>
+                </ScrollReveal>
               ))}
             </div>
           )}

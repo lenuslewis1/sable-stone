@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import ScrollReveal from "./ScrollReveal";
 
 interface SectionHeadingProps {
   label?: string;
@@ -16,11 +16,8 @@ export default function SectionHeading({
   light = false,
 }: SectionHeadingProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.5 }}
+    <ScrollReveal
+      variant="slide-up"
       className={`max-w-3xl mb-12 lg:mb-16 ${centered ? "mx-auto text-center" : ""}`}
     >
       {label && (
@@ -44,6 +41,7 @@ export default function SectionHeading({
           {description}
         </p>
       )}
-    </motion.div>
+    </ScrollReveal>
   );
 }
+

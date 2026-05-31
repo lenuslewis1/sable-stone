@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import { z } from "zod";
 import Layout from "@/components/layout/Layout";
 import { getPropertyBySlug, properties } from "@/data/properties";
 import { toast } from "@/hooks/use-toast";
+import ScrollReveal from "@/components/shared/ScrollReveal";
 
 const leadSchema = z.object({
   name: z.string().trim().min(2, "Please enter your name").max(100),
@@ -65,11 +65,15 @@ export default function PropertyDetail() {
         <div className="relative h-full container-wide flex flex-col justify-end pb-16 lg:pb-24">
           <Link
             to="/properties"
-            className="inline-flex items-center gap-2 text-[11px] uppercase tracking-eyebrow text-foreground/70 hover:text-secondary mb-8 w-fit"
+            className="inline-flex items-center gap-2 text-[11px] uppercase tracking-eyebrow text-foreground/70 hover:text-secondary mb-8 w-fit page-load-reveal will-change-reveal link-underline-draw pb-1"
+            style={{ animationDelay: "150ms" }}
           >
             <ArrowLeft className="w-4 h-4" /> All Properties
           </Link>
-          <div className="flex items-center gap-3 mb-4">
+          <div
+            className="flex items-center gap-3 mb-4 page-load-reveal will-change-reveal"
+            style={{ animationDelay: "300ms" }}
+          >
             <span className="px-3 py-1 bg-background/70 backdrop-blur-sm text-[10px] uppercase tracking-eyebrow">
               {property.status}
             </span>
@@ -77,10 +81,16 @@ export default function PropertyDetail() {
               {property.category} · {property.location}
             </span>
           </div>
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl leading-[0.95] max-w-5xl">
+          <h1
+            className="font-display text-5xl md:text-7xl lg:text-8xl leading-[0.95] max-w-5xl page-load-reveal will-change-reveal"
+            style={{ animationDelay: "450ms" }}
+          >
             {property.name}
           </h1>
-          <p className="mt-6 max-w-2xl text-lg text-foreground/70 font-display italic">
+          <p
+            className="mt-6 max-w-2xl text-lg text-foreground/70 font-display italic page-load-reveal will-change-reveal"
+            style={{ animationDelay: "600ms" }}
+          >
             {property.tagline}
           </p>
         </div>
@@ -88,28 +98,28 @@ export default function PropertyDetail() {
 
       {/* Specs strip */}
       <section className="border-t border-border/40">
-        <div className="container-wide py-10 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-y-8 gap-x-4">
+        <ScrollReveal variant="slide-up" className="container-wide py-10 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-y-8 gap-x-4 will-change-reveal">
           <Spec label="Bedrooms" value={property.bedrooms} />
           <Spec label="Bathrooms" value={property.bathrooms} />
           <Spec label="Interior" value={`${property.interior_sqm} m²`} />
           {property.plot_sqm > 0 && <Spec label="Plot" value={`${property.plot_sqm.toLocaleString()} m²`} />}
           <Spec label="Year" value={property.year} />
           <Spec label="Price" value={property.price} />
-        </div>
+        </ScrollReveal>
       </section>
 
       {/* Description + features */}
       <section className="border-t border-border/40 section-padding">
         <div className="container-wide grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-          <div className="lg:col-span-7 space-y-6">
+          <ScrollReveal variant="slide-up" className="lg:col-span-7 space-y-6 will-change-reveal">
             <p className="text-[11px] uppercase tracking-eyebrow text-secondary">The residence</p>
             {property.description.map((p, i) => (
               <p key={i} className="font-display text-2xl lg:text-3xl leading-snug text-foreground/85">
                 {p}
               </p>
             ))}
-          </div>
-          <div className="lg:col-span-5">
+          </ScrollReveal>
+          <ScrollReveal variant="slide-up" delay={150} className="lg:col-span-5 will-change-reveal">
             <p className="text-[11px] uppercase tracking-eyebrow text-secondary mb-6">Features</p>
             <ul className="divide-y divide-border/40 border-t border-b border-border/40">
               {property.features.map((f) => (
@@ -120,27 +130,30 @@ export default function PropertyDetail() {
               <span className="text-foreground/40 uppercase tracking-eyebrow text-[10px] block mb-1">Architect</span>
               {property.architect}
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Gallery */}
       <section className="border-t border-border/40">
-        <div className="container-wide pt-16 lg:pt-24 pb-6 flex items-baseline justify-between">
+        <ScrollReveal variant="slide-up" className="container-wide pt-16 lg:pt-24 pb-6 flex items-baseline justify-between will-change-reveal">
           <p className="text-[11px] uppercase tracking-eyebrow text-secondary">Gallery</p>
           <p className="text-[11px] uppercase tracking-eyebrow text-foreground/40">
             {property.gallery.length} images
           </p>
-        </div>
+        </ScrollReveal>
         <div className="container-wide pb-20 lg:pb-28">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
             {property.gallery.map((src, i) => (
-              <button
+              <ScrollReveal
                 key={i}
-                onClick={() => setLightbox(i)}
-                className={`relative overflow-hidden bg-muted group ${
+                variant="scale-in"
+                delay={i * 80}
+                className={`relative overflow-hidden bg-muted group will-change-reveal ${
                   i === 0 ? "md:col-span-2 aspect-[16/9]" : "aspect-[4/3]"
                 }`}
+                as="button"
+                onClick={() => setLightbox(i)}
               >
                 <img
                   src={src}
@@ -148,7 +161,7 @@ export default function PropertyDetail() {
                   loading="lazy"
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-105"
                 />
-              </button>
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -157,7 +170,7 @@ export default function PropertyDetail() {
       {/* Lead form */}
       <section id="enquire" className="border-t border-border/40 section-padding bg-muted/30">
         <div className="container-wide grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
-          <div className="lg:col-span-5">
+          <ScrollReveal variant="slide-up" className="lg:col-span-5 will-change-reveal">
             <p className="text-[11px] uppercase tracking-eyebrow text-secondary mb-6">Private Enquiry</p>
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
               Request the<br />
@@ -167,64 +180,73 @@ export default function PropertyDetail() {
               A principal will respond within one working day with floor plans,
               material schedule and viewing availability.
             </p>
-          </div>
-          <form onSubmit={handleSubmit} className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8">
-            <Field label="Name" name="name" required maxLength={100} />
-            <Field label="Email" name="email" type="email" required maxLength={255} />
-            <Field label="Phone" name="phone" type="tel" maxLength={40} />
-            <Field label="Preferred contact" name="preferred" placeholder="Email or phone" maxLength={40} />
-            <div className="sm:col-span-2">
-              <label className="block text-[11px] uppercase tracking-eyebrow text-foreground/50 mb-3">
-                Message
-              </label>
-              <textarea
-                name="message"
-                rows={5}
-                maxLength={1000}
-                placeholder={`I would like to learn more about ${property.name}.`}
-                className="w-full bg-transparent border-b border-border/60 focus:border-secondary outline-none py-2 text-foreground placeholder:text-foreground/30 resize-none"
-              />
-            </div>
-            <div className="sm:col-span-2 pt-4">
-              <button
-                type="submit"
-                disabled={submitting}
-                className="inline-flex items-center gap-3 px-10 py-4 text-[11px] uppercase tracking-eyebrow bg-foreground text-background hover:bg-secondary hover:text-secondary-foreground transition-colors disabled:opacity-50"
-              >
-                {submitting ? "Sending…" : "Request dossier"} <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          </form>
+          </ScrollReveal>
+          <ScrollReveal variant="slide-up" delay={150} className="lg:col-span-7 will-change-reveal">
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8">
+              <Field label="Name" name="name" required maxLength={100} />
+              <Field label="Email" name="email" type="email" required maxLength={255} />
+              <Field label="Phone" name="phone" type="tel" maxLength={40} />
+              <Field label="Preferred contact" name="preferred" placeholder="Email or phone" maxLength={40} />
+              <div className="sm:col-span-2">
+                <label className="block text-[11px] uppercase tracking-eyebrow text-foreground/50 mb-3">
+                  Message
+                </label>
+                <textarea
+                  name="message"
+                  rows={5}
+                  maxLength={1000}
+                  placeholder={`I would like to learn more about ${property.name}.`}
+                  className="w-full bg-transparent border-b border-border/60 focus:border-secondary outline-none py-2 text-foreground placeholder:text-foreground/30 resize-none"
+                />
+              </div>
+              <div className="sm:col-span-2 pt-4">
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="inline-flex items-center gap-3 px-10 py-4 text-[11px] uppercase tracking-eyebrow bg-foreground text-background hover:bg-secondary hover:text-secondary-foreground transition-colors disabled:opacity-50 btn-hover-lift will-change-transform"
+                >
+                  {submitting ? "Sending…" : "Request dossier"} <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </form>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* Related */}
       <section className="border-t border-border/40 section-padding">
         <div className="container-wide">
-          <div className="flex items-baseline justify-between mb-12">
+          <ScrollReveal variant="slide-up" className="flex items-baseline justify-between mb-12 will-change-reveal">
             <h2 className="font-display text-3xl lg:text-5xl">Other residences</h2>
             <Link
               to="/properties"
-              className="text-[11px] uppercase tracking-eyebrow text-foreground/70 hover:text-secondary"
+              className="text-[11px] uppercase tracking-eyebrow text-foreground/70 hover:text-secondary link-underline-draw pb-1 w-fit"
             >
               View portfolio →
             </Link>
-          </div>
+          </ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-12">
-            {related.map((p) => (
-              <Link key={p.slug} to={`/properties/${p.slug}`} className="group block">
-                <div className="relative aspect-[4/5] overflow-hidden bg-muted mb-5">
-                  <img
-                    src={p.gallery[0]}
-                    alt={p.name}
-                    loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-105"
-                  />
-                </div>
-                <p className="text-[11px] uppercase tracking-eyebrow text-foreground/40">{p.category}</p>
-                <h3 className="font-display text-2xl mt-2 group-hover:text-secondary transition-colors">{p.name}</h3>
-                <p className="mt-1 text-sm text-foreground/60">{p.location}</p>
-              </Link>
+            {related.map((p, i) => (
+              <ScrollReveal
+                key={p.slug}
+                variant="slide-up"
+                delay={i * 100}
+                className="card-hover-glow will-change-reveal"
+              >
+                <Link to={`/properties/${p.slug}`} className="group block">
+                  <div className="relative aspect-[4/5] overflow-hidden bg-muted mb-5">
+                    <img
+                      src={p.gallery[0]}
+                      alt={p.name}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-105"
+                    />
+                  </div>
+                  <p className="text-[11px] uppercase tracking-eyebrow text-foreground/40">{p.category}</p>
+                  <h3 className="font-display text-2xl mt-2 group-hover:text-secondary transition-colors">{p.name}</h3>
+                  <p className="mt-1 text-sm text-foreground/60">{p.location}</p>
+                </Link>
+              </ScrollReveal>
             ))}
           </div>
         </div>

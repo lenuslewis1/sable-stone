@@ -8,6 +8,8 @@ import About from "./pages/About";
 import Properties from "./pages/Properties";
 import PropertyDetail from "./pages/PropertyDetail";
 import Journal from "./pages/Journal";
+import JournalDetail from "./pages/JournalDetail";
+import Network from "./pages/Network";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
@@ -24,7 +26,9 @@ const App = () => (
           <Route path="/properties" element={<Properties />} />
           <Route path="/properties/:slug" element={<PropertyDetail />} />
           <Route path="/about" element={<About />} />
+          <Route path="/network" element={<Network />} />
           <Route path="/journal" element={<Journal />} />
+          <Route path="/journal/:slug" element={<JournalDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,33 +1,72 @@
 import { Link } from "react-router-dom";
+import ScrollReveal from "../shared/ScrollReveal";
+import sableStoneLogo from "@/assets/sable-stone-logo.svg";
 
 export default function Footer() {
   return (
     <footer className="bg-dark text-dark-foreground border-t border-border/40">
       <div className="container-wide py-20">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
-          <div className="md:col-span-5">
-            <div className="font-display text-3xl lg:text-4xl">
-              Sable <span className="text-secondary">&</span> Stone
-            </div>
+          <ScrollReveal
+            variant="slide-up"
+            delay={0}
+            className="md:col-span-5 will-change-reveal"
+          >
+            <Link to="/" className="inline-flex w-fit" aria-label="Sable & Stone home">
+              <img
+                src={sableStoneLogo}
+                alt="Sable & Stone"
+                className="w-[190px] sm:w-[220px] lg:w-[260px] h-auto object-contain brightness-0 invert opacity-95"
+              />
+            </Link>
             <p className="mt-6 max-w-sm text-sm text-foreground/60 leading-relaxed">
               A boutique developer of architecturally significant residences
               across Accra and Ghana's coastline.
             </p>
-          </div>
+          </ScrollReveal>
 
-          <div className="md:col-span-3">
+          <ScrollReveal
+            variant="slide-up"
+            delay={100}
+            className="md:col-span-3 will-change-reveal"
+          >
             <p className="text-[11px] uppercase tracking-eyebrow text-foreground/40 mb-5">
               Explore
             </p>
             <ul className="space-y-3 text-sm">
-              <li><Link to="/properties" className="hover:text-secondary">Properties</Link></li>
-              <li><Link to="/about" className="hover:text-secondary">About</Link></li>
-              <li><Link to="/journal" className="hover:text-secondary">Journal</Link></li>
-              <li><Link to="/contact" className="hover:text-secondary">Contact</Link></li>
+              <li>
+                <Link to="/properties" className="hover:text-secondary link-underline-draw pb-0.5">
+                  Properties
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="hover:text-secondary link-underline-draw pb-0.5">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link to="/network" className="hover:text-secondary link-underline-draw pb-0.5">
+                  Network
+                </Link>
+              </li>
+              <li>
+                <Link to="/journal" className="hover:text-secondary link-underline-draw pb-0.5">
+                  Journal
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-secondary link-underline-draw pb-0.5">
+                  Contact
+                </Link>
+              </li>
             </ul>
-          </div>
+          </ScrollReveal>
 
-          <div className="md:col-span-4">
+          <ScrollReveal
+            variant="slide-up"
+            delay={200}
+            className="md:col-span-4 will-change-reveal"
+          >
             <p className="text-[11px] uppercase tracking-eyebrow text-foreground/40 mb-5">
               Studio
             </p>
@@ -35,11 +74,13 @@ export default function Footer() {
               <div>No. 12 Cantonments Road</div>
               <div>Accra, Ghana</div>
               <div className="pt-3">
-                <a href="mailto:hello@sableandstone.gh" className="hover:text-secondary">hello@sableandstone.gh</a>
+                <a href="mailto:hello@sableandstone.gh" className="hover:text-secondary link-underline-draw pb-0.5">
+                  hello@sableandstone.gh
+                </a>
               </div>
               <div>+233 (0) 30 000 0000</div>
             </address>
-          </div>
+          </ScrollReveal>
         </div>
 
         <div className="mt-20 pt-8 hairline flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs text-foreground/40">
@@ -53,3 +94,4 @@ export default function Footer() {
     </footer>
   );
 }
+
