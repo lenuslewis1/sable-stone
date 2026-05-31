@@ -23,7 +23,7 @@ const flagshipResidences = [
   {
     name: "Villa MIA",
     location: "Labone",
-    img: villaMia1,
+    img: villaMia6,
     statusLabel: "Design phase",
     statusValue: "Pending sale",
     phaseLabel: "Building now",
@@ -73,7 +73,7 @@ const flagshipResidences = [
   {
     name: "Villa MIA",
     location: "Tse Addo",
-    img: villaMia6,
+    img: villaMia1,
     statusLabel: "Reservations",
     statusValue: "By invitation",
     phaseLabel: "Structure",
