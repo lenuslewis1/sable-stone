@@ -507,7 +507,7 @@ function ClientServicesScroller() {
     target: ref,
     offset: ["start start", "end end"],
   });
-  const x = useTransform(scrollYProgress, [0, 1], ["42vw", "-52%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["48vw", "-60%"]);
 
   return (
     <section
@@ -531,12 +531,12 @@ function ClientServicesScroller() {
         <div className="mt-12 lg:mt-16">
           <motion.div
             style={{ x }}
-            className="flex w-max gap-5 px-6 lg:gap-6 lg:px-12 will-change-transform"
+            className="flex w-max gap-6 px-6 lg:gap-8 lg:px-12 will-change-transform"
           >
             {clientServices.map((item, i) => (
               <article
                 key={item.title}
-                className="relative flex min-h-[340px] w-[82vw] shrink-0 flex-col justify-between overflow-hidden border border-border/60 bg-background p-8 shadow-2xl shadow-black/20 card-hover-glow sm:w-[420px] lg:w-[480px] lg:p-10"
+                className="relative flex min-h-[440px] w-[88vw] shrink-0 flex-col justify-between overflow-hidden border border-border/60 bg-background p-8 shadow-2xl shadow-black/25 card-hover-glow sm:w-[520px] lg:min-h-[500px] lg:w-[640px] lg:p-12"
               >
                 <img
                   src={item.img}
@@ -544,17 +544,18 @@ function ClientServicesScroller() {
                   loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.4s] ease-out hover:scale-[1.04]"
                 />
-                <div className="absolute inset-0 bg-background/62" />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/92 via-background/50 to-background/25" />
+                <div className="absolute inset-0 bg-background/35" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/78 to-background/18" />
+                <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-background/95 via-background/58 to-transparent" />
 
-                <p className="relative z-10 text-[11px] uppercase tracking-eyebrow text-foreground/55">
+                <p className="relative z-10 text-[11px] uppercase tracking-eyebrow text-foreground/70">
                   0{i + 1}
                 </p>
                 <div className="relative z-10">
-                  <h3 className="font-display text-3xl lg:text-4xl leading-[1.08]">
+                  <h3 className="font-display text-4xl lg:text-5xl leading-[1.05]">
                     {item.title}
                   </h3>
-                  <p className="mt-6 text-sm text-foreground/75 leading-relaxed">
+                  <p className="mt-6 max-w-md text-sm lg:text-base text-foreground/82 leading-relaxed">
                     {item.body}
                   </p>
                 </div>
