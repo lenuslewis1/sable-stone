@@ -1,86 +1,23 @@
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import ScrollReveal from "@/components/shared/ScrollReveal";
+import { residentialCollections, type ResidentialCollection } from "@/data/properties";
 
 import heroVilla from "@/assets/hero-villa.jpg";
 import propertyVilla from "@/assets/property-villa.jpg";
-import villaMia1 from "@/assets/residences/villa-mia-1.webp";
 import villaMia2 from "@/assets/residences/villa-mia-2.webp";
 import villaMia3 from "@/assets/residences/villa-mia-3.webp";
-import villaMia4 from "@/assets/residences/villa-mia-4.webp";
-import villaMia5 from "@/assets/residences/villa-mia-5.webp";
 import villaMia6 from "@/assets/residences/villa-mia-6.webp";
+import villaMae1 from "@/assets/residences/villa-mae/villa-mae-01.webp";
+import villaMae7 from "@/assets/residences/villa-mae/villa-mae-07.webp";
 import aboutDetail from "@/assets/about-detail.jpg";
 import whatWeStandFor from "@/assets/what-we-stand-for-businessman.webp";
 import buyerPersonalisationHome from "@/assets/buyer-personalisation-home.png";
 import constructionDelivery from "@/assets/construction-delivery.webp";
 import philosophyVilla from "@/assets/philosophy-villa.webp";
-
-const flagshipResidences = [
-  {
-    name: "Villa MIA",
-    location: "Labone",
-    img: villaMia6,
-    statusLabel: "Design phase",
-    statusValue: "Pending sale",
-    phaseLabel: "Building now",
-    phaseValue: "Active work",
-    slug: "/properties/maison-cantonments",
-  },
-  {
-    name: "Villa MIA",
-    location: "Cantoments",
-    img: villaMia2,
-    statusLabel: "Inspections",
-    statusValue: "Accepted",
-    phaseLabel: "Prep work",
-    phaseValue: "Opened",
-    slug: "/properties/casa-labadi",
-  },
-  {
-    name: "Villa MIA",
-    location: "Airport Hills",
-    img: villaMia3,
-    statusLabel: "Early plan",
-    statusValue: "Awaiting OK",
-    phaseLabel: "Work begun",
-    phaseValue: "Ongoing now",
-    slug: "/properties/maison-airport",
-  },
-  {
-    name: "Villa MIA",
-    location: "Dzowulu",
-    img: villaMia4,
-    statusLabel: "Concept stage",
-    statusValue: "In studio",
-    phaseLabel: "Site works",
-    phaseValue: "Mobilising",
-    slug: "/properties",
-  },
-  {
-    name: "Villa MIA",
-    location: "East Airport",
-    img: villaMia5,
-    statusLabel: "Permits",
-    statusValue: "Submitted",
-    phaseLabel: "Groundworks",
-    phaseValue: "Scheduled",
-    slug: "/properties",
-  },
-  {
-    name: "Villa MIA",
-    location: "Tse Addo",
-    img: villaMia1,
-    statusLabel: "Reservations",
-    statusValue: "By invitation",
-    phaseLabel: "Structure",
-    phaseValue: "Underway",
-    slug: "/properties",
-  },
-];
 
 const pillars = [
   {
@@ -100,7 +37,7 @@ const pillars = [
 const services = [
   {
     title: "Architectural design",
-    body: "Every plan begins in our studio. Proportion, light and material are resolved before a single line is drawn for construction.",
+    body: "Every plan begins in our company. Proportion, light and material are resolved before a single line is drawn for construction.",
     img: aboutDetail,
     alt: "Travertine and bronze architectural material detail",
   },
@@ -153,6 +90,7 @@ const clientServices = [
 
 const heroSlides = [
   {
+    type: "video",
     video: "/sable-sand-hero-1.mp4",
     eyebrow: "A boutique luxury development house — Accra",
     headline: "Strategic design for premium property success.",
@@ -163,6 +101,7 @@ const heroSlides = [
     secondaryHref: "/contact",
   },
   {
+    type: "video",
     video: "/sable-sand-hero-2.mp4",
     eyebrow: "Villa MIA — private residences",
     headline: "A new standard for modern Ghanaian luxury.",
@@ -173,13 +112,36 @@ const heroSlides = [
     secondaryHref: "/contact",
   },
   {
+    type: "image",
+    image: villaMae1,
+    eyebrow: "Villa Mae - private residences",
+    headline: "Layered villas made for privacy and ease.",
+    accent: "privacy",
+    primaryLabel: "Explore Villa Mae",
+    primaryHref: "/properties",
+    secondaryLabel: "Request a viewing ->",
+    secondaryHref: "/contact",
+  },
+  {
+    type: "image",
+    image: villaMae7,
+    eyebrow: "Villa Mae - resort-led living",
+    headline: "Courtyard homes shaped around outdoor life.",
+    accent: "outdoor",
+    primaryLabel: "View residences",
+    primaryHref: "/properties",
+    secondaryLabel: "Speak with the company ->",
+    secondaryHref: "/contact",
+  },
+  {
+    type: "video",
     video: "/sable-stone-hero.mp4",
     eyebrow: "Designed, developed and delivered",
     headline: "Homes shaped around privacy, permanence and care.",
     accent: "permanence",
     primaryLabel: "Explore our approach",
     primaryHref: "/about",
-    secondaryLabel: "Speak with the studio →",
+    secondaryLabel: "Speak with the company →",
     secondaryHref: "/contact",
   },
 ];
@@ -239,25 +201,37 @@ export default function Index() {
     <Layout transparentNav>
       {/* HERO */}
       <section className="relative h-screen w-full overflow-hidden">
-        {heroSlides.map((slide, index) => (
-          <video
-            key={slide.video}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-              activeHeroVideo === index ? "opacity-100" : "opacity-0"
-            }`}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload={index === 0 ? "auto" : "metadata"}
-            poster={heroVilla}
-            aria-label={`Sable & Stone luxury residence hero video ${index + 1}`}
-            onCanPlay={(event) => slowHeroVideo(event.currentTarget)}
-            onLoadedMetadata={(event) => slowHeroVideo(event.currentTarget)}
-          >
-            <source src={slide.video} type="video/mp4" />
-          </video>
-        ))}
+        {heroSlides.map((slide, index) =>
+          slide.type === "video" ? (
+            <video
+              key={slide.video}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                activeHeroVideo === index ? "opacity-100" : "opacity-0"
+              }`}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload={index === 0 ? "auto" : "metadata"}
+              poster={heroVilla}
+              aria-label={`Sable & Stone luxury residence hero video ${index + 1}`}
+              onCanPlay={(event) => slowHeroVideo(event.currentTarget)}
+              onLoadedMetadata={(event) => slowHeroVideo(event.currentTarget)}
+            >
+              <source src={slide.video} type="video/mp4" />
+            </video>
+          ) : (
+            <img
+              key={slide.image}
+              src={slide.image}
+              alt={`${slide.eyebrow} hero image`}
+              className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${
+                activeHeroVideo === index ? "opacity-100" : "opacity-0"
+              }`}
+              loading={index === 0 ? "eager" : "lazy"}
+            />
+          ),
+        )}
         <div className="absolute inset-0 bg-gradient-to-b from-background/35 via-background/15 to-background/95" />
 
         <div
@@ -272,7 +246,7 @@ export default function Index() {
               className={`h-px w-12 transition-colors ${
                 activeHeroVideo === index ? "bg-secondary" : "bg-foreground/35"
               }`}
-              aria-label={`Show hero video ${index + 1}`}
+              aria-label={`Show hero slide ${index + 1}`}
               aria-current={activeHeroVideo === index}
             />
           ))}
@@ -325,8 +299,10 @@ export default function Index() {
         </div>
       </section>
 
-      {/* FLAGSHIP RESIDENCES — HORIZONTAL SCROLL */}
-      <HorizontalResidences />
+      {/* RESIDENTIAL COLLECTIONS */}
+      {residentialCollections.map((collection) => (
+        <HorizontalResidences key={collection.name} collection={collection} />
+      ))}
 
       {/* WHAT WE STAND FOR */}
       <section className="section-padding">
@@ -337,7 +313,7 @@ export default function Index() {
           >
             <div>
               <p className="text-[11px] uppercase tracking-eyebrow text-secondary">
-                01 — Our unique approach
+                03 — Our unique approach
               </p>
               <h2 className="mt-6 font-display text-4xl md:text-5xl leading-[1.05]">
                 What we <em className="italic text-secondary">stand for</em>
@@ -357,9 +333,9 @@ export default function Index() {
           <ScrollReveal
             variant="slide-up"
             delay={150}
-            className="lg:col-span-7 flex flex-col justify-center space-y-8 text-foreground/70 leading-relaxed will-change-reveal"
+            className="lg:col-span-7 flex flex-col justify-center space-y-8 text-lg md:text-xl text-foreground/70 leading-relaxed will-change-reveal"
           >
-            <p className="text-lg md:text-xl text-foreground/85">
+            <p className="text-foreground/85">
               Sable & Stone is a luxury development house defined by architectural clarity, material intelligence and disciplined execution. The name carries its meaning deliberately —
               <em className="italic text-secondary"> sable</em> for depth and refinement,
               <em className="italic text-secondary"> stone</em> for permanence and integrity.
@@ -379,7 +355,7 @@ export default function Index() {
         <div className="container-wide">
           <ScrollReveal variant="slide-up" className="max-w-3xl will-change-reveal">
             <p className="text-[11px] uppercase tracking-eyebrow text-secondary mb-6">
-              02 — Flagship-Led Development
+              04 — Flagship-Led Development
             </p>
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
               A boutique luxury <em className="italic text-secondary">developer</em>.
@@ -413,7 +389,7 @@ export default function Index() {
             className="lg:col-span-4 lg:sticky lg:top-32 lg:self-start will-change-reveal"
           >
             <p className="text-[11px] uppercase tracking-eyebrow text-secondary mb-6">
-              04 — Apartments & Luxury
+              05 — Apartments & Luxury
             </p>
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
               The full <em className="italic text-secondary">service</em>.
@@ -477,7 +453,7 @@ export default function Index() {
           </ScrollReveal>
           <ScrollReveal variant="slide-up" delay={150} className="px-6 lg:px-20 py-24 lg:py-40 flex flex-col justify-center will-change-reveal">
             <p className="text-[11px] uppercase tracking-eyebrow text-secondary mb-6">
-              05 — Philosophy
+              06 — Philosophy
             </p>
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
               We do not build volume.
@@ -520,7 +496,7 @@ function ClientServicesScroller() {
         <div className="container-wide">
           <ScrollReveal variant="slide-up" className="max-w-4xl will-change-reveal">
             <p className="text-[11px] uppercase tracking-eyebrow text-secondary mb-6">
-              06 — Client Services
+              07 — Client Services
             </p>
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl leading-[1.05]">
               Guidance beyond the <em className="italic text-secondary">address</em>.
@@ -568,7 +544,7 @@ function ClientServicesScroller() {
   );
 }
 
-function HorizontalResidences() {
+function HorizontalResidences({ collection }: { collection: ResidentialCollection }) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -584,7 +560,7 @@ function HorizontalResidences() {
       ref={ref}
       className="relative border-t border-border/40 bg-background"
       style={{ height: "660vh" }}
-      aria-label="Current residences"
+      aria-label={collection.name}
     >
       <div className="sticky top-0 h-screen w-full overflow-hidden">
         <motion.div style={{ x }} className="flex h-full w-[700vw]">
@@ -592,14 +568,13 @@ function HorizontalResidences() {
           <div className="relative h-full w-screen flex-shrink-0 p-3">
             <div className="relative h-full w-full border border-border/40 rounded-sm overflow-hidden flex flex-col justify-center px-6 lg:px-24">
               <p className="text-[11px] uppercase tracking-eyebrow text-secondary mb-6">
-                02 — Current residences
+                {collection.label}
               </p>
               <h2 className="font-display text-5xl md:text-7xl lg:text-[7rem] leading-[0.95] max-w-3xl">
-                Villa <em className="italic text-secondary">MIA</em>
+                Villa <em className="italic text-secondary">{collection.headingAccent}</em>
               </h2>
               <p className="mt-10 max-w-md text-foreground/60 leading-relaxed">
-                Six flagship residences in development across Accra. Scroll to
-                move through the portfolio.
+                {collection.body}
               </p>
               <Link
                 to="/properties"
@@ -611,7 +586,7 @@ function HorizontalResidences() {
           </div>
 
           {/* Residence panels */}
-          {flagshipResidences.map((p) => (
+          {collection.residences.map((p) => (
             <div
               key={p.location}
               className="relative h-full w-screen flex-shrink-0 p-3"

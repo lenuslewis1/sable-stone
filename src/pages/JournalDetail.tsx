@@ -49,6 +49,28 @@ export default function JournalDetail() {
           >
             {entry.deck}
           </p>
+          {entry.pdfUrl && (
+            <div
+              className="mt-10 flex flex-wrap gap-4 page-load-reveal will-change-reveal"
+              style={{ animationDelay: "750ms" }}
+            >
+              <a
+                href={entry.pdfUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-3 bg-foreground px-8 py-4 text-[11px] uppercase tracking-eyebrow text-background transition-colors hover:bg-secondary hover:text-secondary-foreground btn-hover-lift will-change-transform"
+              >
+                Open profile <ArrowRight className="h-4 w-4" />
+              </a>
+              <a
+                href={entry.pdfUrl}
+                download
+                className="inline-flex items-center gap-3 border border-foreground/50 px-8 py-4 text-[11px] uppercase tracking-eyebrow text-foreground transition-colors hover:border-secondary hover:text-secondary btn-hover-lift will-change-transform"
+              >
+                Download PDF
+              </a>
+            </div>
+          )}
         </div>
       </section>
 
@@ -66,6 +88,25 @@ export default function JournalDetail() {
                 <p className="font-display text-3xl">{entry.date}</p>
                 <p className="mt-1 text-sm text-foreground/50">{entry.readTime}</p>
               </div>
+              {entry.pdfUrl && (
+                <div className="space-y-3 pt-2">
+                  <a
+                    href={entry.pdfUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block text-[11px] uppercase tracking-eyebrow text-foreground hover:text-secondary link-underline-draw pb-1 w-fit"
+                  >
+                    Open PDF
+                  </a>
+                  <a
+                    href={entry.pdfUrl}
+                    download
+                    className="block text-[11px] uppercase tracking-eyebrow text-foreground/65 hover:text-secondary link-underline-draw pb-1 w-fit"
+                  >
+                    Download
+                  </a>
+                </div>
+              )}
             </div>
           </ScrollReveal>
 

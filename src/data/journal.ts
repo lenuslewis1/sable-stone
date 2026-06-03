@@ -12,6 +12,7 @@ export interface JournalEntry {
   heroImage: string;
   heroAlt: string;
   deck: string;
+  pdfUrl?: string;
   sections: {
     eyebrow?: string;
     heading: string;
@@ -20,6 +21,89 @@ export interface JournalEntry {
 }
 
 export const journalEntries: JournalEntry[] = [
+  {
+    slug: "sable-and-stone-profile",
+    cat: "Profile",
+    title: "Sable & Stone Profile",
+    excerpt: "The Sable & Stone luxury development house profile.",
+    date: "June 2026",
+    readTime: "PDF profile",
+    heroImage: aboutDetail,
+    heroAlt: "Travertine and bronze architectural material detail",
+    pdfUrl: "/documents/sable-and-stone-profile.pdf",
+    deck:
+      "A boutique luxury developer delivering architecturally significant residences for a globally discerning clientele.",
+    sections: [
+      {
+        eyebrow: "Profile",
+        heading: "Luxury Development House",
+        body: [
+          "Sable & Stone is a real estate development firm creating distinctive residential, hospitality, and lifestyle destinations.",
+          "As a full turnkey developer, Sable & Stone conceives, designs, develops, and delivers its own branded projects, bringing together architecture, design, construction, and operational planning into a single, cohesive development vision.",
+          "Sable & Stone specializes in premium villas, private residences, and curated residential communities defined by architectural excellence, meticulous attention to detail, and thoughtful lifestyle design.",
+          "Built on integrity, aesthetic innovation, and superior craftsmanship, each Sable & Stone development is carefully crafted to deliver refined living environments with enduring quality andmodernamenities.",
+          "Beyond residential development, Sable & Stone is building a portfolio of lifestyle-driven destinations, expanding the brand into hospitality and experiential real estate.",
+          "Guided by a commitment to design excellence, innovation, and long-term value creation, Sable & Stone focuses on creating distinctive environments that bring together thoughtful architecture, curated experiences, and enduring quality.",
+        ],
+      },
+      {
+        eyebrow: "Direction",
+        heading: "Vision and Mission",
+        body: [
+          "Vision",
+          "To craft inspiring experiences through thoughtful development.",
+          "Mission",
+          "To develop thoughtfully designed residential and lifestyle destinations defined by architectural excellence, exceptional experiences, uncompromising quality, and long-term value.",
+        ],
+      },
+      {
+        eyebrow: "Values",
+        heading: "Values",
+        body: [
+          "Design Vision",
+          "We believe exceptional destinations begin with thoughtful architecture, design innovation, and a commitment to aesthetic excellence",
+          "Quality with Compromise",
+          "We are committed to delivering developments defined by superior craftsmanship, enduring materials, and meticulous attention to detail.",
+          "Thoughtful Development",
+          "We approach every project with careful planning and a long-term perspective, ensuring each development enhances its surroundings and community.",
+          "Experience Driven Living",
+          "We design environments that enrich how people live, stay, and connect with their surroundings.",
+          "Long-Term Value",
+          "We focus on creating developments that deliver enduring value for residents, investors, and the communities we serve.",
+        ],
+      },
+      {
+        eyebrow: "Commitment",
+        heading: "Health, Safety, and Quality Commitment",
+        body: [
+          "Sable & Stone is committed to maintaining the highest standards of safety and quality throughout the development process:",
+          "Safety",
+          "Providing a safe workplace for all staff and contractors through stringent QHSE practices.",
+          "Sustainability",
+          "Reducing the environmental impact of operations and promoting sustainable lifestyle design.",
+          "Craftsmanship",
+          "Ensuring superior craftsmanship and meticulous attention to detail in every finished space.",
+        ],
+      },
+      {
+        eyebrow: "Future",
+        heading: "Focus Areas & Future",
+        body: [
+          "Beyond residential development, Sable & Stone is actively building a portfolio of lifestyle-driven destinations.",
+          "Guided by a commitment to design excellence and innovation, the firm focuses on creating distinctive environments that bring together thoughtful architecture, experiences, and enduring quality.",
+        ],
+      },
+      {
+        eyebrow: "Contact",
+        heading: "Sable & Stone Ltd",
+        body: [
+          "1HNO. 22, Airport Residential Area, Adomi Street, Accra, Ghana",
+          "info@sableandstonegh.com",
+          "www.sableandstonegh.com",
+        ],
+      },
+    ],
+  },
   {
     slug: "our-philosophy",
     cat: "Philosophy",
@@ -109,14 +193,14 @@ export const journalEntries: JournalEntry[] = [
     ],
   },
   {
-    slug: "studio-visit-principal-architect",
+    slug: "company-visit-principal-architect",
     cat: "Conversation",
-    title: "A studio visit with our principal architect",
+    title: "A company visit with our principal architect",
     excerpt: "On restraint, repetition, and houses that age with grace.",
     date: "January 2026",
     readTime: "6 min read",
     heroImage: aboutDetail,
-    heroAlt: "Architectural material samples in a design studio",
+    heroAlt: "Architectural material samples in a design company",
     deck:
       "A conversation on the quiet choices that separate a fashionable house from a lasting one.",
     sections: [
@@ -124,7 +208,7 @@ export const journalEntries: JournalEntry[] = [
         heading: "Restraint as a working method",
         body: [
           "Restraint is not absence. It is the discipline of knowing which decisions should be visible and which should disappear into the confidence of the plan.",
-          "The studio returns to proportion, repetition and light because those are the qualities that keep working after novelty has faded.",
+          "The company returns to proportion, repetition and light because those are the qualities that keep working after novelty has faded.",
         ],
       },
     ],

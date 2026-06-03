@@ -19,7 +19,7 @@ export default function Journal() {
           style={{ animationDelay: "300ms" }}
         >
           Field notes from<br />
-          <em className="italic text-secondary">the studio.</em>
+          <em className="italic text-secondary">the company.</em>
         </h1>
       </section>
 

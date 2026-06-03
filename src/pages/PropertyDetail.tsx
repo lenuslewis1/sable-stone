@@ -78,7 +78,7 @@ export default function PropertyDetail() {
               {property.status}
             </span>
             <span className="text-[11px] uppercase tracking-eyebrow text-secondary">
-              {property.category} · {property.location}
+              {property.collection} / {property.category} / {property.location}
             </span>
           </div>
           <h1
@@ -242,7 +242,9 @@ export default function PropertyDetail() {
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-105"
                     />
                   </div>
-                  <p className="text-[11px] uppercase tracking-eyebrow text-foreground/40">{p.category}</p>
+                  <p className="text-[11px] uppercase tracking-eyebrow text-foreground/40">
+                    {p.collection} / {p.category}
+                  </p>
                   <h3 className="font-display text-2xl mt-2 group-hover:text-secondary transition-colors">{p.name}</h3>
                   <p className="mt-1 text-sm text-foreground/60">{p.location}</p>
                 </Link>

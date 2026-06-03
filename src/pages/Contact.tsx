@@ -27,23 +27,22 @@ export default function Contact() {
             className="lg:col-span-5 space-y-12 will-change-reveal"
           >
             <div>
-              <p className="text-[11px] uppercase tracking-eyebrow text-foreground/40 mb-3">Studio</p>
+              <p className="text-[11px] uppercase tracking-eyebrow text-foreground/40 mb-3">Company</p>
               <p className="font-display text-2xl leading-snug">
-                No. 12 Cantonments Road<br />Accra, Ghana
+                Sable & Stone Ltd<br />
+                HNO. 22, Airport Residential Area<br />
+                Adomi Street<br />
+                Accra, Ghana
               </p>
             </div>
             <div>
               <p className="text-[11px] uppercase tracking-eyebrow text-foreground/40 mb-3">Private enquiries</p>
-              <a href="mailto:hello@sableandstone.gh" className="font-display text-2xl hover:text-secondary block link-underline-draw pb-0.5 w-fit">
-                hello@sableandstone.gh
+              <a href="mailto:info@sableandstonegh.com" className="font-display text-2xl hover:text-secondary block link-underline-draw pb-0.5 w-fit">
+                info@sableandstonegh.com
               </a>
-              <a href="tel:+233300000000" className="font-display text-2xl hover:text-secondary block mt-1 link-underline-draw pb-0.5 w-fit">
-                +233 (0) 30 000 0000
+              <a href="https://www.sableandstonegh.com" className="font-display text-2xl hover:text-secondary block mt-1 link-underline-draw pb-0.5 w-fit">
+                www.sableandstonegh.com
               </a>
-            </div>
-            <div>
-              <p className="text-[11px] uppercase tracking-eyebrow text-foreground/40 mb-3">By appointment</p>
-              <p className="text-foreground/60">Monday – Friday · 10:00 – 18:00 GMT</p>
             </div>
           </ScrollReveal>
 

@@ -1,14 +1,54 @@
-import propertyPenthouse from "@/assets/property-penthouse.jpg";
-import propertyVilla from "@/assets/property-villa.jpg";
-import propertyTower from "@/assets/property-tower.jpg";
-import heroVilla from "@/assets/hero-villa.jpg";
-import aboutDetail from "@/assets/about-detail.jpg";
+import villaMia1 from "@/assets/residences/villa-mia-1.webp";
+import villaMia2 from "@/assets/residences/villa-mia-2.webp";
+import villaMia3 from "@/assets/residences/villa-mia-3.webp";
+import villaMia4 from "@/assets/residences/villa-mia-4.webp";
+import villaMia5 from "@/assets/residences/villa-mia-5.webp";
+import villaMia6 from "@/assets/residences/villa-mia-6.webp";
+import villaMae1 from "@/assets/residences/villa-mae/villa-mae-01.webp";
+import villaMae2 from "@/assets/residences/villa-mae/villa-mae-02.webp";
+import villaMae3 from "@/assets/residences/villa-mae/villa-mae-03.webp";
+import villaMae4 from "@/assets/residences/villa-mae/villa-mae-04.webp";
+import villaMae5 from "@/assets/residences/villa-mae/villa-mae-05.webp";
+import villaMae6 from "@/assets/residences/villa-mae/villa-mae-06.webp";
+import villaMae7 from "@/assets/residences/villa-mae/villa-mae-07.webp";
+import villaMae8 from "@/assets/residences/villa-mae/villa-mae-08.webp";
+import villaMae9 from "@/assets/residences/villa-mae/villa-mae-09.webp";
+import villaMae10 from "@/assets/residences/villa-mae/villa-mae-10.webp";
+import villaMae11 from "@/assets/residences/villa-mae/villa-mae-11.webp";
+import villaMae12 from "@/assets/residences/villa-mae/villa-mae-12.webp";
+import villaMae13 from "@/assets/residences/villa-mae/villa-mae-13.webp";
+import villaMae14 from "@/assets/residences/villa-mae/villa-mae-14.webp";
+import villaMae15 from "@/assets/residences/villa-mae/villa-mae-15.webp";
+import villaMae16 from "@/assets/residences/villa-mae/villa-mae-16.webp";
+import villaMae17 from "@/assets/residences/villa-mae/villa-mae-17.webp";
 
 export type Category = "Villa" | "Penthouse" | "Tower" | "Estate";
 export type Status = "Available" | "Reserved" | "Launching" | "Development";
+export type CollectionName = "Villa MIA" | "Villa Mae";
+
+export interface ResidenceCard {
+  name: CollectionName;
+  location: string;
+  img: string;
+  statusLabel: string;
+  statusValue: string;
+  phaseLabel: string;
+  phaseValue: string;
+  slug: string;
+}
+
+export interface ResidentialCollection {
+  name: CollectionName;
+  label: string;
+  headingAccent: string;
+  eyebrow: string;
+  body: string;
+  residences: ResidenceCard[];
+}
 
 export interface Property {
   slug: string;
+  collection: CollectionName;
   name: string;
   location: string;
   category: Category;
@@ -26,215 +66,172 @@ export interface Property {
   gallery: string[];
 }
 
-export const properties: Property[] = [
-  {
-    slug: "maison-cantonments",
-    name: "Maison Cantonments",
-    location: "Cantonments, Accra",
-    category: "Penthouse",
-    status: "Available",
-    bedrooms: 5,
-    bathrooms: 6,
-    interior_sqm: 620,
-    plot_sqm: 0,
-    year: 2025,
-    architect: "Atelier Kobi Nartey",
-    price: "On enquiry",
-    tagline: "A travertine penthouse set above the diplomatic quarter.",
-    description: [
-      "Maison Cantonments occupies the top two floors of a quiet six-storey building in Accra's diplomatic enclave. The plan opens around a double-height travertine atrium and a single, uninterrupted sightline from the entry sequence to the city skyline.",
-      "Every surface — travertine, smoked oak, hand-finished bronze — was specified in the studio and installed by a single mason team over fourteen months.",
-    ],
-    features: [
-      "Double-height travertine atrium",
-      "Private rooftop with plunge pool",
-      "Bronze-clad kitchen, Gaggenau appliances",
-      "Smart lighting and climate by Lutron",
-      "Two dedicated parking bays and storage",
-      "24-hour concierge and security",
-    ],
-    gallery: [propertyPenthouse, aboutDetail, heroVilla, propertyVilla],
+const locations = [
+  "Labone",
+  "Cantonments",
+  "Airport Hills",
+  "Dzowulu",
+  "East Airport",
+  "Tse Addo",
+] as const;
+
+const villaMiaImages = [villaMia6, villaMia2, villaMia3, villaMia4, villaMia5, villaMia1];
+
+const villaMaeGalleries = [
+  [villaMae1, villaMae2, villaMae4, villaMae7, villaMae10],
+  [villaMae3, villaMae5, villaMae6, villaMae11, villaMae17],
+  [villaMae2, villaMae1, villaMae3, villaMae4, villaMae5, villaMae6],
+  [villaMae7, villaMae8, villaMae9, villaMae10, villaMae11],
+  [villaMae12, villaMae13, villaMae14, villaMae15],
+  [villaMae16, villaMae17, villaMae10, villaMae11, villaMae12],
+];
+
+const locationMeta = {
+  Labone: {
+    status: "Reserved" as Status,
+    statusLabel: "Design phase",
+    statusValue: "Pending sale",
+    phaseLabel: "Building now",
+    phaseValue: "Active work",
+    plot: 1400,
   },
-  {
-    slug: "casa-labadi",
-    name: "Casa Labadi",
-    location: "Labadi Beach, Accra",
+  Cantonments: {
+    status: "Available" as Status,
+    statusLabel: "Inspections",
+    statusValue: "Accepted",
+    phaseLabel: "Prep work",
+    phaseValue: "Opened",
+    plot: 1550,
+  },
+  "Airport Hills": {
+    status: "Available" as Status,
+    statusLabel: "Early plan",
+    statusValue: "Awaiting OK",
+    phaseLabel: "Work begun",
+    phaseValue: "Ongoing now",
+    plot: 1800,
+  },
+  Dzowulu: {
+    status: "Development" as Status,
+    statusLabel: "Concept stage",
+    statusValue: "In company",
+    phaseLabel: "Site works",
+    phaseValue: "Mobilising",
+    plot: 1320,
+  },
+  "East Airport": {
+    status: "Launching" as Status,
+    statusLabel: "Permits",
+    statusValue: "Submitted",
+    phaseLabel: "Groundworks",
+    phaseValue: "Scheduled",
+    plot: 1650,
+  },
+  "Tse Addo": {
+    status: "Development" as Status,
+    statusLabel: "Reservations",
+    statusValue: "By invitation",
+    phaseLabel: "Structure",
+    phaseValue: "Underway",
+    plot: 1500,
+  },
+};
+
+const slugify = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
+const makeVilla = (
+  collection: CollectionName,
+  location: (typeof locations)[number],
+  gallery: string[],
+  index: number,
+): Property => {
+  const meta = locationMeta[location];
+  const name = `${collection} ${location}`;
+  const isMae = collection === "Villa Mae";
+  return {
+    slug: `${slugify(collection)}-${slugify(location)}`,
+    collection,
+    name,
+    location: `${location}, Accra`,
     category: "Villa",
-    status: "Reserved",
-    bedrooms: 6,
-    bathrooms: 7,
-    interior_sqm: 840,
-    plot_sqm: 2200,
-    year: 2024,
-    architect: "Studio Adjei",
+    status: meta.status,
+    bedrooms: isMae ? 6 : 5,
+    bathrooms: isMae ? 7 : 6,
+    interior_sqm: isMae ? 780 + index * 18 : 640 + index * 16,
+    plot_sqm: meta.plot,
+    year: isMae ? 2026 : 2025,
+    architect: "Sable & Stone Design Company",
     price: "On enquiry",
-    tagline: "A beachfront residence shaped by salt, wind and palm.",
+    tagline: isMae
+      ? `A courtyard-led Villa Mae residence shaped for privacy, shade and outdoor living in ${location}.`
+      : `A refined Villa MIA residence planned for private family living in ${location}.`,
     description: [
-      "Casa Labadi sits behind a planted dune on a 2,200 sqm beachfront plot. The house is organised as three pavilions linked by shaded courtyards, drawing the trade winds through the plan year-round.",
-      "Limestone, ironwood and lime plaster are the only materials used externally. The interior is kept deliberately spare.",
+      isMae
+        ? `Villa Mae ${location} extends the collection with a low, resort-like plan, layered gardens, shaded terraces and a pool court at the centre of daily life.`
+        : `Villa MIA ${location} is part of a six-residence collection across Accra, developed around privacy, permanence and disciplined material choices.`,
+      "Each residence is handled as a complete Sable & Stone development: site planning, architecture, interior direction, construction delivery and long-term owner support move as one process.",
     ],
     features: [
-      "Direct beach access through private dune garden",
-      "60m infinity pool aligned to the horizon",
-      "Outdoor kitchen and shaded dining loggia",
-      "Staff quarters and separate guest pavilion",
-      "Borehole, solar array and full backup power",
+      "Private villa compound",
+      "Pool court and landscaped outdoor rooms",
+      "Open-plan living and dining pavilion",
+      "Principal suite with private terrace",
+      "Secure parking and service access",
+      "Backup power, water storage and smart-home readiness",
     ],
-    gallery: [propertyVilla, heroVilla, aboutDetail, propertyPenthouse],
+    gallery,
+  };
+};
+
+const villaMiaProperties = locations.map((location, index) =>
+  makeVilla("Villa MIA", location, [
+    villaMiaImages[index],
+    villaMiaImages[(index + 1) % villaMiaImages.length],
+    villaMiaImages[(index + 2) % villaMiaImages.length],
+    villaMiaImages[(index + 3) % villaMiaImages.length],
+  ], index),
+);
+
+const villaMaeProperties = locations.map((location, index) =>
+  makeVilla("Villa Mae", location, villaMaeGalleries[index], index),
+);
+
+export const properties: Property[] = [...villaMiaProperties, ...villaMaeProperties];
+
+export const residentialCollections: ResidentialCollection[] = [
+  {
+    name: "Villa MIA",
+    label: "01 — Current residences",
+    headingAccent: "MIA",
+    eyebrow: "Villa MIA - private residences",
+    body: "Six flagship residences in development across Accra. Scroll to move through the portfolio.",
+    residences: villaMiaProperties.map((property, index) => ({
+      name: "Villa MIA",
+      location: locations[index],
+      img: property.gallery[0],
+      statusLabel: locationMeta[locations[index]].statusLabel,
+      statusValue: locationMeta[locations[index]].statusValue,
+      phaseLabel: locationMeta[locations[index]].phaseLabel,
+      phaseValue: locationMeta[locations[index]].phaseValue,
+      slug: `/properties/${property.slug}`,
+    })),
   },
   {
-    slug: "the-ridge-tower",
-    name: "The Ridge Tower",
-    location: "Ridge, Accra",
-    category: "Tower",
-    status: "Launching",
-    bedrooms: "2 – 4",
-    bathrooms: "2 – 5",
-    interior_sqm: 280,
-    plot_sqm: 0,
-    year: 2026,
-    architect: "Heatherwick-inspired collaboration",
-    price: "From US$ 1.2M",
-    tagline: "Twenty-six sculptural residences above Ridge.",
-    description: [
-      "The Ridge Tower is a sculptural residential building of bronze-clad concrete, comprising twenty-six homes across fourteen floors. Every residence is corner-positioned with floor-to-ceiling glazing on two elevations.",
-      "Sales open in spring 2026; an early-release allocation of six residences is currently held for private enquiries.",
-    ],
-    features: [
-      "26 residences, 2 – 4 bedrooms",
-      "Sky lounge and rooftop pool on level 14",
-      "Wellness floor: spa, gym, treatment rooms",
-      "Private resident's lobby and concierge",
-      "Secure parking with EV charging",
-    ],
-    gallery: [propertyTower, propertyPenthouse, aboutDetail, heroVilla],
-  },
-  {
-    slug: "villa-aburi",
-    name: "Villa Aburi",
-    location: "Aburi Hills",
-    category: "Estate",
-    status: "Development",
-    bedrooms: 7,
-    bathrooms: 8,
-    interior_sqm: 1100,
-    plot_sqm: 11000,
-    year: 2027,
-    architect: "Atelier Kobi Nartey",
-    price: "On enquiry",
-    tagline: "An eleven-hectare hillside estate above Accra.",
-    description: [
-      "Villa Aburi is a 1,100 sqm primary residence on an eleven-hectare hillside plot, oriented to the southern view over Accra. The estate includes a separate guest house, agricultural terraces and a working vineyard.",
-      "Currently in early site works; completion is anticipated late 2027.",
-    ],
-    features: [
-      "1,100 sqm primary residence plus guest pavilion",
-      "Working vineyard and orchard terraces",
-      "Private cinema, library and cellar",
-      "Helipad and three-bay garage",
-      "Off-grid solar with battery backup",
-    ],
-    gallery: [heroVilla, propertyVilla, aboutDetail, propertyTower],
-  },
-  {
-    slug: "osu-sky-residences",
-    name: "Osu Sky Residences",
-    location: "Osu, Accra",
-    category: "Tower",
-    status: "Available",
-    bedrooms: 3,
-    bathrooms: 3,
-    interior_sqm: 220,
-    plot_sqm: 0,
-    year: 2025,
-    architect: "Studio Adjei",
-    price: "From US$ 780K",
-    tagline: "Compact three-bedroom residences in the heart of Osu.",
-    description: [
-      "A small building of eighteen residences, three per floor, designed for urban primary living. Each residence opens onto a private loggia with views over Osu's low rooftops to the coast.",
-    ],
-    features: [
-      "Three-bedroom layouts, 220 sqm interior",
-      "Private loggia with planted screen",
-      "Shared rooftop garden and lap pool",
-      "Walkable to Oxford Street and the coast",
-    ],
-    gallery: [propertyTower, propertyPenthouse, heroVilla, aboutDetail],
-  },
-  {
-    slug: "maison-airport",
-    name: "Maison Airport",
-    location: "Airport Residential",
-    category: "Villa",
-    status: "Available",
-    bedrooms: 5,
-    bathrooms: 6,
-    interior_sqm: 720,
-    plot_sqm: 1400,
-    year: 2024,
-    architect: "Atelier Kobi Nartey",
-    price: "On enquiry",
-    tagline: "A walled courtyard villa in Airport Residential.",
-    description: [
-      "A five-bedroom courtyard residence laid out around a central reflecting pool, walled on all four sides for absolute privacy in one of Accra's most established neighbourhoods.",
-    ],
-    features: [
-      "Central reflecting pool and shaded courtyard",
-      "Five en-suite bedrooms across two wings",
-      "Detached staff quarters and double garage",
-      "Backup power, borehole and water treatment",
-    ],
-    gallery: [propertyVilla, aboutDetail, heroVilla, propertyPenthouse],
-  },
-  {
-    slug: "penthouse-cantonments-no-7",
-    name: "Penthouse Cantonments No. 7",
-    location: "Cantonments, Accra",
-    category: "Penthouse",
-    status: "Reserved",
-    bedrooms: 4,
-    bathrooms: 5,
-    interior_sqm: 480,
-    plot_sqm: 0,
-    year: 2025,
-    architect: "Studio Adjei",
-    price: "On enquiry",
-    tagline: "A four-bedroom penthouse with a private rooftop garden.",
-    description: [
-      "Penthouse No. 7 occupies the full upper floor of a boutique building of seven residences. A private elevator opens directly into a gallery hall lined in smoked oak.",
-    ],
-    features: [
-      "Private elevator, gallery entry",
-      "260 sqm rooftop garden with plunge pool",
-      "Four en-suite bedrooms",
-      "Two dedicated parking bays",
-    ],
-    gallery: [propertyPenthouse, aboutDetail, propertyTower, heroVilla],
-  },
-  {
-    slug: "coastal-estate-prampram",
-    name: "Coastal Estate Prampram",
-    location: "Prampram Coast",
-    category: "Estate",
-    status: "Development",
-    bedrooms: 8,
-    bathrooms: 9,
-    interior_sqm: 1400,
-    plot_sqm: 18000,
-    year: 2027,
-    architect: "Atelier Kobi Nartey",
-    price: "On enquiry",
-    tagline: "A coastal compound east of Accra.",
-    description: [
-      "A 1.8-hectare coastal compound with 200m of direct beach frontage. The brief calls for a main residence, two guest pavilions and a beach club, all set within a planted dune ecosystem.",
-    ],
-    features: [
-      "200m of private beach frontage",
-      "Main residence plus two guest pavilions",
-      "Beach club with bar and treatment rooms",
-      "Helipad and arrival court",
-    ],
-    gallery: [heroVilla, propertyVilla, propertyPenthouse, aboutDetail],
+    name: "Villa Mae",
+    label: "02 — New residential collection",
+    headingAccent: "Mae",
+    eyebrow: "Villa Mae - courtyard residences",
+    body: "A second six-residence collection for the same Accra locations, anchored by garden courts, water and deep shaded outdoor rooms.",
+    residences: villaMaeProperties.map((property, index) => ({
+      name: "Villa Mae",
+      location: locations[index],
+      img: property.gallery[0],
+      statusLabel: locationMeta[locations[index]].statusLabel,
+      statusValue: locationMeta[locations[index]].statusValue,
+      phaseLabel: locationMeta[locations[index]].phaseLabel,
+      phaseValue: locationMeta[locations[index]].phaseValue,
+      slug: `/properties/${property.slug}`,
+    })),
   },
 ];
 

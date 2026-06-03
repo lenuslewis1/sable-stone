@@ -37,14 +37,14 @@ export default function SiteCTA() {
             className="lg:col-span-4 lg:justify-self-end will-change-reveal"
           >
             <p className="max-w-sm text-sm text-foreground/65 leading-relaxed">
-              Speak with the studio about available residences, private viewings,
+              Speak with the company about available residences, private viewings,
               or a discreet development brief.
             </p>
             <Link
               to="/contact"
               className="mt-8 inline-flex items-center gap-3 px-9 py-4 text-[11px] uppercase tracking-eyebrow bg-foreground text-background hover:bg-secondary hover:text-secondary-foreground transition-colors btn-hover-lift will-change-transform"
             >
-              Contact the studio <ArrowRight className="w-4 h-4" />
+              Contact us <ArrowRight className="w-4 h-4" />
             </Link>
           </ScrollReveal>
         </div>

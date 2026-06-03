@@ -45,13 +45,13 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/network" className="hover:text-secondary link-underline-draw pb-0.5">
-                  Network
+                <Link to="/journal" className="hover:text-secondary link-underline-draw pb-0.5">
+                  Journal
                 </Link>
               </li>
               <li>
-                <Link to="/journal" className="hover:text-secondary link-underline-draw pb-0.5">
-                  Journal
+                <Link to="/journal/sable-and-stone-profile" className="hover:text-secondary link-underline-draw pb-0.5">
+                  Profile
                 </Link>
               </li>
               <li>
@@ -68,23 +68,29 @@ export default function Footer() {
             className="md:col-span-4 will-change-reveal"
           >
             <p className="text-[11px] uppercase tracking-eyebrow text-foreground/40 mb-5">
-              Studio
+              Company
             </p>
             <address className="not-italic text-sm space-y-2 text-foreground/70 leading-relaxed">
-              <div>No. 12 Cantonments Road</div>
+              <div>Sable & Stone Ltd</div>
+              <div>HNO. 22, Airport Residential Area</div>
+              <div>Adomi Street</div>
               <div>Accra, Ghana</div>
               <div className="pt-3">
-                <a href="mailto:hello@sableandstone.gh" className="hover:text-secondary link-underline-draw pb-0.5">
-                  hello@sableandstone.gh
+                <a href="mailto:info@sableandstonegh.com" className="hover:text-secondary link-underline-draw pb-0.5">
+                  info@sableandstonegh.com
                 </a>
               </div>
-              <div>+233 (0) 30 000 0000</div>
+              <div>
+                <a href="https://www.sableandstonegh.com" className="hover:text-secondary link-underline-draw pb-0.5">
+                  www.sableandstonegh.com
+                </a>
+              </div>
             </address>
           </ScrollReveal>
         </div>
 
         <div className="mt-20 pt-8 hairline flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs text-foreground/40">
-          <p>© {new Date().getFullYear()} Sable & Stone Properties. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Sable & Stone Ltd. All rights reserved.</p>
           <div className="flex gap-6 uppercase tracking-eyebrow">
             <span>Privacy</span>
             <span>Terms</span>

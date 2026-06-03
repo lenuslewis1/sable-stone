@@ -2,31 +2,34 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Search, X } from "lucide-react";
 import Layout from "@/components/layout/Layout";
-import { properties, type Category } from "@/data/properties";
+import { properties, type CollectionName } from "@/data/properties";
 import ScrollReveal from "@/components/shared/ScrollReveal";
 
-const categories: ("All" | Category)[] = ["All", "Villa", "Penthouse", "Tower", "Estate"];
+const collections: CollectionName[] = ["Villa MIA", "Villa Mae"];
 
 export default function Properties() {
   const [query, setQuery] = useState("");
-  const [category, setCategory] = useState<"All" | Category>("All");
+  const [collection, setCollection] = useState<CollectionName>("Villa MIA");
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return properties.filter((p) => {
-      const matchesCat = category === "All" || p.category === category;
+      const matchesCollection = p.collection === collection;
       const matchesQ =
         !q ||
         p.name.toLowerCase().includes(q) ||
         p.location.toLowerCase().includes(q) ||
-        p.category.toLowerCase().includes(q);
-      return matchesCat && matchesQ;
+        p.category.toLowerCase().includes(q) ||
+        p.collection.toLowerCase().includes(q);
+      return matchesCollection && matchesQ;
     });
-  }, [query, category]);
+  }, [query, collection]);
 
   const counts = useMemo(() => {
-    const map: Record<string, number> = { All: properties.length };
-    for (const c of categories.slice(1)) map[c] = properties.filter((p) => p.category === c).length;
+    const map = {} as Record<CollectionName, number>;
+    for (const item of collections) {
+      map[item] = properties.filter((property) => property.collection === item).length;
+    }
     return map;
   }, []);
 
@@ -49,7 +52,7 @@ export default function Properties() {
       </section>
 
       <section
-        className="border-t border-border/40 sticky top-20 lg:top-24 z-30 bg-background/90 backdrop-blur-md page-load-reveal will-change-reveal"
+        className="border-t border-border/40 bg-background/90 backdrop-blur-md page-load-reveal will-change-reveal"
         style={{ animationDelay: "450ms" }}
       >
         <div className="container-wide py-6 flex flex-col lg:flex-row lg:items-center gap-6 lg:gap-10">
@@ -59,7 +62,7 @@ export default function Properties() {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value.slice(0, 80))}
-              placeholder="Search by name, location or type…"
+              placeholder="Search by name, collection, location or type..."
               className="w-full bg-transparent border-b border-border/60 focus:border-secondary outline-none pl-7 pr-8 py-3 text-foreground placeholder:text-foreground/30 text-sm"
             />
             {query && (
@@ -73,20 +76,27 @@ export default function Properties() {
             )}
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 lg:gap-3">
-            {categories.map((c) => {
-              const active = category === c;
+          <div
+            className="flex flex-wrap items-center gap-2 lg:gap-3"
+            role="tablist"
+            aria-label="Property collections"
+          >
+            {collections.map((item) => {
+              const active = collection === item;
               return (
                 <button
-                  key={c}
-                  onClick={() => setCategory(c)}
+                  key={item}
+                  type="button"
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => setCollection(item)}
                   className={`px-4 py-2 text-[11px] uppercase tracking-eyebrow border transition-colors btn-hover-lift will-change-transform ${
                     active
                       ? "bg-foreground text-background border-foreground"
                       : "border-border/60 text-foreground/70 hover:text-foreground hover:border-foreground/60"
                   }`}
                 >
-                  {c} <span className="ml-1 opacity-50">{counts[c]}</span>
+                  {item} <span className="ml-1 opacity-50">{counts[item]}</span>
                 </button>
               );
             })}
@@ -100,9 +110,9 @@ export default function Properties() {
             <p className="text-[11px] uppercase tracking-eyebrow text-foreground/40">
               {filtered.length} {filtered.length === 1 ? "residence" : "residences"}
             </p>
-            {(query || category !== "All") && (
+            {(query || collection !== "Villa MIA") && (
               <button
-                onClick={() => { setQuery(""); setCategory("All"); }}
+                onClick={() => { setQuery(""); setCollection("Villa MIA"); }}
                 className="text-[11px] uppercase tracking-eyebrow text-secondary hover:underline"
               >
                 Reset filters
@@ -138,7 +148,9 @@ export default function Properties() {
                         {p.status}
                       </div>
                     </div>
-                    <p className="text-[11px] uppercase tracking-eyebrow text-foreground/40">{p.category}</p>
+                    <p className="text-[11px] uppercase tracking-eyebrow text-foreground/40">
+                      {p.collection} / {p.category}
+                    </p>
                     <h3 className="font-display text-2xl lg:text-3xl mt-2 group-hover:text-secondary transition-colors">
                       {p.name}
                     </h3>
