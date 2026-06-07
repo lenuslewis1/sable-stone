@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import { z } from "zod";
@@ -14,15 +14,71 @@ const leadSchema = z.object({
   message: z.string().trim().max(1000).optional().or(z.literal("")),
 });
 
+type LightboxState = {
+  sectionKey: string;
+  index: number;
+};
+
 export default function PropertyDetail() {
   const { slug } = useParams<{ slug: string }>();
   const property = getPropertyBySlug(slug);
-  const [lightbox, setLightbox] = useState<number | null>(null);
+  const [activeGallerySection, setActiveGallerySection] = useState("all");
+  const [lightbox, setLightbox] = useState<LightboxState | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   if (!property) return <Navigate to="/properties" replace />;
 
   const related = properties.filter((p) => p.slug !== property.slug).slice(0, 3);
+  const gallerySections = useMemo(
+    () => [
+      { key: "all", label: "All", images: property.gallery },
+      ...property.gallerySections,
+    ],
+    [property.gallery, property.gallerySections],
+  );
+  const selectedGallerySection =
+    gallerySections.find((section) => section.key === activeGallerySection) ?? gallerySections[0];
+  const lightboxSection =
+    lightbox ? gallerySections.find((section) => section.key === lightbox.sectionKey) ?? gallerySections[0] : null;
+
+  const openHeroImage = (event: React.MouseEvent<HTMLElement>) => {
+    const target = event.target as HTMLElement;
+    if (target.closest("a, button, input, textarea, select")) return;
+    setLightbox({ sectionKey: "all", index: 0 });
+  };
+
+  useEffect(() => {
+    if (lightbox === null) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setLightbox(null);
+      }
+      if (event.key === "ArrowLeft") {
+        setLightbox((current) => {
+          if (!current) return current;
+          const section = gallerySections.find((item) => item.key === current.sectionKey) ?? gallerySections[0];
+          return {
+            ...current,
+            index: (current.index - 1 + section.images.length) % section.images.length,
+          };
+        });
+      }
+      if (event.key === "ArrowRight") {
+        setLightbox((current) => {
+          if (!current) return current;
+          const section = gallerySections.find((item) => item.key === current.sectionKey) ?? gallerySections[0];
+          return {
+            ...current,
+            index: (current.index + 1) % section.images.length,
+          };
+        });
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [gallerySections, lightbox]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,15 +110,24 @@ export default function PropertyDetail() {
 
   return (
     <Layout>
-      {/* Hero */}
-      <section className="relative h-[90vh] min-h-[560px] w-full overflow-hidden">
-        <img
-          src={property.gallery[0]}
-          alt={property.name}
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/10 to-background/85" />
-        <div className="relative h-full container-wide flex flex-col justify-end pb-16 lg:pb-24">
+      <section
+        className="relative h-[90vh] min-h-[560px] w-full overflow-hidden cursor-zoom-in"
+        onClick={openHeroImage}
+      >
+        <button
+          type="button"
+          onClick={() => setLightbox({ sectionKey: "all", index: 0 })}
+          className="absolute inset-0 block w-full h-full cursor-zoom-in group"
+          aria-label={`View ${property.name} hero image full screen`}
+        >
+          <img
+            src={property.gallery[0]}
+            alt={property.name}
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-105"
+          />
+        </button>
+        <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-background/30 via-background/10 to-background/85" />
+        <div className="relative z-10 h-full container-wide flex flex-col justify-end pb-16 lg:pb-24">
           <Link
             to="/properties"
             className="inline-flex items-center gap-2 text-[11px] uppercase tracking-eyebrow text-foreground/70 hover:text-secondary mb-8 w-fit page-load-reveal will-change-reveal link-underline-draw pb-1"
@@ -96,19 +161,17 @@ export default function PropertyDetail() {
         </div>
       </section>
 
-      {/* Specs strip */}
       <section className="border-t border-border/40">
         <ScrollReveal variant="slide-up" className="container-wide py-10 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-y-8 gap-x-4 will-change-reveal">
           <Spec label="Bedrooms" value={property.bedrooms} />
           <Spec label="Bathrooms" value={property.bathrooms} />
-          <Spec label="Interior" value={`${property.interior_sqm} m²`} />
-          {property.plot_sqm > 0 && <Spec label="Plot" value={`${property.plot_sqm.toLocaleString()} m²`} />}
+          <Spec label="Interior" value={`${property.interior_sqm} m2`} />
+          {property.plot_sqm > 0 && <Spec label="Plot" value={`${property.plot_sqm.toLocaleString()} m2`} />}
           <Spec label="Year" value={property.year} />
           <Spec label="Price" value={property.price} />
         </ScrollReveal>
       </section>
 
-      {/* Description + features */}
       <section className="border-t border-border/40 section-padding">
         <div className="container-wide grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
           <ScrollReveal variant="slide-up" className="lg:col-span-7 space-y-6 will-change-reveal">
@@ -134,30 +197,58 @@ export default function PropertyDetail() {
         </div>
       </section>
 
-      {/* Gallery */}
       <section className="border-t border-border/40">
-        <ScrollReveal variant="slide-up" className="container-wide pt-16 lg:pt-24 pb-6 flex items-baseline justify-between will-change-reveal">
-          <p className="text-[11px] uppercase tracking-eyebrow text-secondary">Gallery</p>
-          <p className="text-[11px] uppercase tracking-eyebrow text-foreground/40">
-            {property.gallery.length} images
-          </p>
+        <ScrollReveal variant="slide-up" className="container-wide pt-16 lg:pt-24 pb-8 will-change-reveal">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <p className="text-[11px] uppercase tracking-eyebrow text-secondary">Gallery</p>
+              <h2 className="mt-3 font-display text-3xl lg:text-5xl">{selectedGallerySection.label}</h2>
+            </div>
+            <p className="text-[11px] uppercase tracking-eyebrow text-foreground/40">
+              {selectedGallerySection.images.length} images
+            </p>
+          </div>
+          {gallerySections.length > 2 && (
+            <div className="mt-8 flex flex-wrap gap-2">
+              {gallerySections.map((section) => {
+                const active = activeGallerySection === section.key;
+                return (
+                  <button
+                    key={section.key}
+                    type="button"
+                    onClick={() => setActiveGallerySection(section.key)}
+                    className={`px-4 py-3 text-[10px] uppercase tracking-eyebrow transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary ${
+                      active
+                        ? "bg-foreground text-background"
+                        : "border border-border/60 text-foreground/60 hover:border-secondary hover:text-secondary"
+                    }`}
+                    aria-pressed={active}
+                  >
+                    {section.label} <span className="ml-2 opacity-60">{section.images.length}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </ScrollReveal>
         <div className="container-wide pb-20 lg:pb-28">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
-            {property.gallery.map((src, i) => (
+            {selectedGallerySection.images.map((src, i) => (
               <ScrollReveal
-                key={i}
+                key={`${selectedGallerySection.key}-${src}`}
                 variant="scale-in"
                 delay={i * 80}
-                className={`relative overflow-hidden bg-muted group will-change-reveal ${
+                className={`relative overflow-hidden bg-muted group cursor-zoom-in will-change-reveal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                   i === 0 ? "md:col-span-2 aspect-[16/9]" : "aspect-[4/3]"
                 }`}
                 as="button"
-                onClick={() => setLightbox(i)}
+                type="button"
+                aria-label={`View ${property.name} ${selectedGallerySection.label.toLowerCase()} image ${i + 1} full screen`}
+                onClick={() => setLightbox({ sectionKey: selectedGallerySection.key, index: i })}
               >
                 <img
                   src={src}
-                  alt={`${property.name} — image ${i + 1}`}
+                  alt={`${property.name} - ${selectedGallerySection.label} image ${i + 1}`}
                   loading="lazy"
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-105"
                 />
@@ -167,7 +258,6 @@ export default function PropertyDetail() {
         </div>
       </section>
 
-      {/* Lead form */}
       <section id="enquire" className="border-t border-border/40 section-padding bg-muted/30">
         <div className="container-wide grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
           <ScrollReveal variant="slide-up" className="lg:col-span-5 will-change-reveal">
@@ -205,7 +295,7 @@ export default function PropertyDetail() {
                   disabled={submitting}
                   className="inline-flex items-center gap-3 px-10 py-4 text-[11px] uppercase tracking-eyebrow bg-foreground text-background hover:bg-secondary hover:text-secondary-foreground transition-colors disabled:opacity-50 btn-hover-lift will-change-transform"
                 >
-                  {submitting ? "Sending…" : "Request dossier"} <ArrowRight className="w-4 h-4" />
+                  {submitting ? "Sending..." : "Request dossier"} <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
             </form>
@@ -213,7 +303,6 @@ export default function PropertyDetail() {
         </div>
       </section>
 
-      {/* Related */}
       <section className="border-t border-border/40 section-padding">
         <div className="container-wide">
           <ScrollReveal variant="slide-up" className="flex items-baseline justify-between mb-12 will-change-reveal">
@@ -222,7 +311,7 @@ export default function PropertyDetail() {
               to="/properties"
               className="text-[11px] uppercase tracking-eyebrow text-foreground/70 hover:text-secondary link-underline-draw pb-1 w-fit"
             >
-              View portfolio →
+              View portfolio -&gt;
             </Link>
           </ScrollReveal>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-12">
@@ -254,8 +343,7 @@ export default function PropertyDetail() {
         </div>
       </section>
 
-      {/* Lightbox */}
-      {lightbox !== null && (
+      {lightbox && lightboxSection && (
         <div
           className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-md flex items-center justify-center p-4 lg:p-12"
           onClick={() => setLightbox(null)}
@@ -268,27 +356,45 @@ export default function PropertyDetail() {
             <X className="w-6 h-6" />
           </button>
           <button
-            onClick={(e) => { e.stopPropagation(); setLightbox((i) => (i === null ? 0 : (i - 1 + property.gallery.length) % property.gallery.length)); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              setLightbox((current) => {
+                if (!current) return current;
+                return {
+                  ...current,
+                  index: (current.index - 1 + lightboxSection.images.length) % lightboxSection.images.length,
+                };
+              });
+            }}
             className="absolute left-4 lg:left-10 text-foreground/70 hover:text-secondary p-3"
             aria-label="Previous"
           >
             <ArrowLeft className="w-6 h-6" />
           </button>
           <img
-            src={property.gallery[lightbox]}
-            alt=""
+            src={lightboxSection.images[lightbox.index]}
+            alt={`${property.name} - ${lightboxSection.label} image ${lightbox.index + 1}`}
             className="max-h-full max-w-full object-contain"
             onClick={(e) => e.stopPropagation()}
           />
           <button
-            onClick={(e) => { e.stopPropagation(); setLightbox((i) => (i === null ? 0 : (i + 1) % property.gallery.length)); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              setLightbox((current) => {
+                if (!current) return current;
+                return {
+                  ...current,
+                  index: (current.index + 1) % lightboxSection.images.length,
+                };
+              });
+            }}
             className="absolute right-4 lg:right-10 text-foreground/70 hover:text-secondary p-3"
             aria-label="Next"
           >
             <ArrowRight className="w-6 h-6" />
           </button>
           <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[11px] uppercase tracking-eyebrow text-foreground/60">
-            {lightbox + 1} / {property.gallery.length}
+            {lightboxSection.label} - {lightbox.index + 1} / {lightboxSection.images.length}
           </p>
         </div>
       )}

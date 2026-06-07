@@ -8,9 +8,9 @@ import { residentialCollections, type ResidentialCollection } from "@/data/prope
 
 import heroVilla from "@/assets/hero-villa.jpg";
 import propertyVilla from "@/assets/property-villa.jpg";
-import villaMia2 from "@/assets/residences/villa-mia-2.webp";
-import villaMia3 from "@/assets/residences/villa-mia-3.webp";
-import villaMia6 from "@/assets/residences/villa-mia-6.webp";
+import villaMiaExterior1 from "@/assets/residences/villa-mia/villa-mia-exterior-01.jpg";
+import villaMiaExterior2 from "@/assets/residences/villa-mia/villa-mia-exterior-02.jpg";
+import villaMiaExterior3 from "@/assets/residences/villa-mia/villa-mia-exterior-03.jpg";
 import villaMae1 from "@/assets/residences/villa-mae/villa-mae-01.webp";
 import villaMae7 from "@/assets/residences/villa-mae/villa-mae-07.webp";
 import aboutDetail from "@/assets/about-detail.jpg";
@@ -65,7 +65,7 @@ const clientServices = [
   {
     title: "Exclusive sales",
     body: "Clear, expert insight makes buying or selling your property seamless, secure, and stress-free through every stage.",
-    img: villaMia6,
+    img: villaMiaExterior1,
     alt: "Modern Villa MIA residence exterior",
   },
   {
@@ -77,13 +77,13 @@ const clientServices = [
   {
     title: "Virtual tours",
     body: "Immersive virtual tours let buyers explore homes from anywhere, saving time and drawing more serious offers fast.",
-    img: villaMia2,
+    img: villaMiaExterior2,
     alt: "Luxury villa terrace and pool at twilight",
   },
   {
     title: "Market insights",
     body: "Accurate market research guides each step, helping our clients make smart moves and reach their property goals with ease.",
-    img: villaMia3,
+    img: villaMiaExterior3,
     alt: "Modern Villa MIA residence with evening lighting",
   },
 ];

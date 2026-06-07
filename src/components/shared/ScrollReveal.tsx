@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, ReactNode, ElementType } from "react";
+import { useEffect, useRef, useState, ReactNode, ElementType, CSSProperties } from "react";
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -8,6 +8,8 @@ interface ScrollRevealProps {
   once?: boolean;
   className?: string;
   as?: ElementType;
+  style?: CSSProperties;
+  [key: string]: unknown;
 }
 
 export default function ScrollReveal({
@@ -18,6 +20,8 @@ export default function ScrollReveal({
   once = true,
   className = "",
   as: Component = "div",
+  style,
+  ...props
 }: ScrollRevealProps) {
   const ref = useRef<HTMLElement>(null);
   const [revealed, setRevealed] = useState(false);
@@ -53,13 +57,14 @@ export default function ScrollReveal({
   const variantClass = revealed ? `revealed-${variant}` : "";
   const combinedClassName = `reveal-on-scroll ${variantClass} ${className}`.trim();
 
-  const style = delay > 0 ? { animationDelay: `${delay}ms` } : undefined;
+  const revealStyle = delay > 0 ? { ...style, animationDelay: `${delay}ms` } : style;
 
   return (
     <Component
+      {...props}
       ref={ref as any}
       className={combinedClassName}
-      style={style}
+      style={revealStyle}
     >
       {children}
     </Component>

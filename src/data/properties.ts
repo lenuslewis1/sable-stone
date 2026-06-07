@@ -1,9 +1,29 @@
-import villaMia1 from "@/assets/residences/villa-mia-1.webp";
-import villaMia2 from "@/assets/residences/villa-mia-2.webp";
-import villaMia3 from "@/assets/residences/villa-mia-3.webp";
-import villaMia4 from "@/assets/residences/villa-mia-4.webp";
-import villaMia5 from "@/assets/residences/villa-mia-5.webp";
-import villaMia6 from "@/assets/residences/villa-mia-6.webp";
+import villaMiaExterior1 from "@/assets/residences/villa-mia/villa-mia-exterior-01.jpg";
+import villaMiaExterior2 from "@/assets/residences/villa-mia/villa-mia-exterior-02.jpg";
+import villaMiaExterior3 from "@/assets/residences/villa-mia/villa-mia-exterior-03.jpg";
+import villaMiaExterior4 from "@/assets/residences/villa-mia/villa-mia-exterior-04.jpg";
+import villaMiaExterior5 from "@/assets/residences/villa-mia/villa-mia-exterior-05.jpg";
+import villaMiaExterior6 from "@/assets/residences/villa-mia/villa-mia-exterior-06.jpg";
+import villaMiaExterior7 from "@/assets/residences/villa-mia/villa-mia-exterior-07.jpg";
+import villaMiaExterior8 from "@/assets/residences/villa-mia/villa-mia-exterior-08.jpg";
+import villaMiaInterior1 from "@/assets/residences/villa-mia/villa-mia-interior-01.jpg";
+import villaMiaInterior2 from "@/assets/residences/villa-mia/villa-mia-interior-02.jpg";
+import villaMiaInterior3 from "@/assets/residences/villa-mia/villa-mia-interior-03.jpg";
+import villaMiaInterior4 from "@/assets/residences/villa-mia/villa-mia-interior-04.jpg";
+import villaMiaInterior5 from "@/assets/residences/villa-mia/villa-mia-interior-05.jpg";
+import villaMiaInterior6 from "@/assets/residences/villa-mia/villa-mia-interior-06.jpg";
+import villaMiaInterior7 from "@/assets/residences/villa-mia/villa-mia-interior-07.jpg";
+import villaMiaInterior8 from "@/assets/residences/villa-mia/villa-mia-interior-08.jpg";
+import villaMiaInterior9 from "@/assets/residences/villa-mia/villa-mia-interior-09.jpg";
+import villaMiaInterior10 from "@/assets/residences/villa-mia/villa-mia-interior-10.jpg";
+import villaMiaInterior11 from "@/assets/residences/villa-mia/villa-mia-interior-11.jpg";
+import villaMiaInterior12 from "@/assets/residences/villa-mia/villa-mia-interior-12.jpg";
+import villaMiaInterior13 from "@/assets/residences/villa-mia/villa-mia-interior-13.jpg";
+import villaMiaInterior14 from "@/assets/residences/villa-mia/villa-mia-interior-14.jpg";
+import villaMiaInterior15 from "@/assets/residences/villa-mia/villa-mia-interior-15.jpg";
+import villaMiaInterior16 from "@/assets/residences/villa-mia/villa-mia-interior-16.jpg";
+import villaMiaInterior17 from "@/assets/residences/villa-mia/villa-mia-interior-17.jpg";
+import villaMiaInterior18 from "@/assets/residences/villa-mia/villa-mia-interior-18.jpg";
 import villaMae1 from "@/assets/residences/villa-mae/villa-mae-01.webp";
 import villaMae2 from "@/assets/residences/villa-mae/villa-mae-02.webp";
 import villaMae3 from "@/assets/residences/villa-mae/villa-mae-03.webp";
@@ -46,6 +66,12 @@ export interface ResidentialCollection {
   residences: ResidenceCard[];
 }
 
+export interface GallerySection {
+  key: string;
+  label: string;
+  images: string[];
+}
+
 export interface Property {
   slug: string;
   collection: CollectionName;
@@ -64,6 +90,7 @@ export interface Property {
   description: string[];
   features: string[];
   gallery: string[];
+  gallerySections: GallerySection[];
 }
 
 const locations = [
@@ -74,17 +101,6 @@ const locations = [
   "East Airport",
   "Tse Addo",
 ] as const;
-
-const villaMiaImages = [villaMia6, villaMia2, villaMia3, villaMia4, villaMia5, villaMia1];
-
-const villaMaeGalleries = [
-  [villaMae1, villaMae2, villaMae4, villaMae7, villaMae10],
-  [villaMae3, villaMae5, villaMae6, villaMae11, villaMae17],
-  [villaMae2, villaMae1, villaMae3, villaMae4, villaMae5, villaMae6],
-  [villaMae7, villaMae8, villaMae9, villaMae10, villaMae11],
-  [villaMae12, villaMae13, villaMae14, villaMae15],
-  [villaMae16, villaMae17, villaMae10, villaMae11, villaMae12],
-];
 
 const locationMeta = {
   Labone: {
@@ -137,17 +153,125 @@ const locationMeta = {
   },
 };
 
-const slugify = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+const villaMiaExteriorImages = [
+  villaMiaExterior1,
+  villaMiaExterior2,
+  villaMiaExterior3,
+  villaMiaExterior4,
+  villaMiaExterior5,
+  villaMiaExterior6,
+  villaMiaExterior7,
+  villaMiaExterior8,
+];
+
+const villaMiaInteriorImages = [
+  villaMiaInterior1,
+  villaMiaInterior2,
+  villaMiaInterior3,
+  villaMiaInterior4,
+  villaMiaInterior5,
+  villaMiaInterior6,
+  villaMiaInterior7,
+  villaMiaInterior8,
+  villaMiaInterior9,
+  villaMiaInterior10,
+  villaMiaInterior11,
+  villaMiaInterior12,
+  villaMiaInterior13,
+  villaMiaInterior14,
+  villaMiaInterior15,
+  villaMiaInterior16,
+  villaMiaInterior17,
+  villaMiaInterior18,
+];
+
+const villaMiaBasementEntryImages = Object.entries(
+  import.meta.glob<string>("../assets/residences/villa-mia/villa-mia-basement-entry-*.jpg", {
+    eager: true,
+    import: "default",
+  }),
+)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, src]) => src);
+
+const villaMiaGroundFloorConceptImages = Object.entries(
+  import.meta.glob<string>("../assets/residences/villa-mia/villa-mia-ground-floor-concept-*.jpg", {
+    eager: true,
+    import: "default",
+  }),
+)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, src]) => src);
+
+const villaMaeRev2Images = Object.entries(
+  import.meta.glob<string>("../assets/residences/villa-mae/villa-mae-rev2-*.jpg", {
+    eager: true,
+    import: "default",
+  }),
+)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, src]) => src);
+
+const villaMaeDesignFfeImages = Object.entries(
+  import.meta.glob<string>(
+    [
+      "../assets/residences/villa-mae/villa-mae-design-ffe-*.jpg",
+      "../assets/residences/villa-mae/villa-mae-design-ffe-*.png",
+    ],
+    {
+      eager: true,
+      import: "default",
+    },
+  ),
+)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, src]) => src);
+
+const villaMaeGalleries = [
+  [villaMae1, villaMae2, villaMae4, villaMae7, villaMae10],
+  [villaMae3, villaMae5, villaMae6, villaMae11, villaMae17],
+  [villaMae2, villaMae1, villaMae3, villaMae4, villaMae5, villaMae6],
+  [villaMae7, villaMae8, villaMae9, villaMae10, villaMae11],
+  [villaMae12, villaMae13, villaMae14, villaMae15],
+  [villaMae16, villaMae17, villaMae10, villaMae11, villaMae12],
+];
+
+const slugify = (value: string) =>
+  value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
+const flattenGallerySections = (sections: GallerySection[]) =>
+  sections.flatMap((section) => section.images);
+
+const makeVillaMiaGallerySections = (index: number): GallerySection[] => {
+  const exteriorImages = [
+    villaMiaExteriorImages[index % villaMiaExteriorImages.length],
+    ...villaMiaExteriorImages.filter((_, imageIndex) => imageIndex !== index % villaMiaExteriorImages.length),
+  ];
+
+  return [
+    { key: "exterior", label: "Exterior", images: exteriorImages },
+    { key: "interior", label: "Interior", images: villaMiaInteriorImages },
+    { key: "basement-entry", label: "Basement entry", images: villaMiaBasementEntryImages },
+    { key: "ground-floor-concept", label: "Ground floor concept", images: villaMiaGroundFloorConceptImages },
+  ];
+};
+
+const makeVillaMaeGallerySections = (gallery: string[]): GallerySection[] => [
+  { key: "gallery", label: "Gallery", images: gallery },
+  { key: "rev-2-visuals", label: "Rev 2 visuals", images: villaMaeRev2Images },
+  { key: "design-ffe", label: "Design FFE", images: villaMaeDesignFfeImages },
+];
 
 const makeVilla = (
   collection: CollectionName,
   location: (typeof locations)[number],
-  gallery: string[],
+  gallerySections: GallerySection[],
   index: number,
 ): Property => {
   const meta = locationMeta[location];
   const name = `${collection} ${location}`;
   const isMae = collection === "Villa Mae";
+
   return {
     slug: `${slugify(collection)}-${slugify(location)}`,
     collection,
@@ -179,21 +303,17 @@ const makeVilla = (
       "Secure parking and service access",
       "Backup power, water storage and smart-home readiness",
     ],
-    gallery,
+    gallery: flattenGallerySections(gallerySections),
+    gallerySections,
   };
 };
 
 const villaMiaProperties = locations.map((location, index) =>
-  makeVilla("Villa MIA", location, [
-    villaMiaImages[index],
-    villaMiaImages[(index + 1) % villaMiaImages.length],
-    villaMiaImages[(index + 2) % villaMiaImages.length],
-    villaMiaImages[(index + 3) % villaMiaImages.length],
-  ], index),
+  makeVilla("Villa MIA", location, makeVillaMiaGallerySections(index), index),
 );
 
 const villaMaeProperties = locations.map((location, index) =>
-  makeVilla("Villa Mae", location, villaMaeGalleries[index], index),
+  makeVilla("Villa Mae", location, makeVillaMaeGallerySections(villaMaeGalleries[index]), index),
 );
 
 export const properties: Property[] = [...villaMiaProperties, ...villaMaeProperties];
@@ -201,7 +321,7 @@ export const properties: Property[] = [...villaMiaProperties, ...villaMaePropert
 export const residentialCollections: ResidentialCollection[] = [
   {
     name: "Villa MIA",
-    label: "01 — Current residences",
+    label: "01 - Current residences",
     headingAccent: "MIA",
     eyebrow: "Villa MIA - private residences",
     body: "Six flagship residences in development across Accra. Scroll to move through the portfolio.",
@@ -218,7 +338,7 @@ export const residentialCollections: ResidentialCollection[] = [
   },
   {
     name: "Villa Mae",
-    label: "02 — New residential collection",
+    label: "02 - New residential collection",
     headingAccent: "Mae",
     eyebrow: "Villa Mae - courtyard residences",
     body: "A second six-residence collection for the same Accra locations, anchored by garden courts, water and deep shaded outdoor rooms.",
